@@ -1,0 +1,76 @@
+# AI Feeds Configuration
+
+# Feed sources
+sources:
+  arxiv:
+    enabled: true
+    categories:
+      - cs.AI
+      - cs.CL
+      - cs.LG
+      - stat.ML
+    max_results: 50
+
+  huggingface:
+    enabled: true
+    limit: 30
+
+  hackernews:
+    enabled: true
+    queries:
+      - "AI"
+      - "LLM"
+      - "machine learning"
+    max_stories: 30
+
+  reddit:
+    enabled: true
+    subreddits:
+      - MachineLearning
+      - LocalLLaMA
+      - artificial
+    sort: hot
+    limit: 25
+
+  github_trending:
+    enabled: true
+    languages:
+      - python
+      - typescript
+    since: daily
+
+  producthunt:
+    enabled: false  # Requires OAuth2
+    topics:
+      - artificial-intelligence
+
+  devto:
+    enabled: true
+    tag: ai
+    top: 7
+
+# Processing
+processor:
+  llm:
+    provider: claude  # or openai, ollama
+    model: claude-sonnet-4-20250514
+  relevance_threshold: 7  # Only surface items scoring 7+
+  max_items_per_source: 10
+
+# Output
+output:
+  vault_path: ~/vault/knowledge/wikis/ai-engineering/raw/signals
+  format: obsidian  # obsidian, markdown, json
+
+# Learning plan integration
+learning_plan:
+  interests:
+    - context engineering
+    - agent architectures
+    - RAG
+    - fine-tuning
+    - production AI
+    - LLM integration
+    - browser automation
+  unchecked_modules: 18
+  phase: 4
