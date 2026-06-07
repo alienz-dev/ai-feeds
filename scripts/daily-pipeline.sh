@@ -61,5 +61,10 @@ if [[ "${1:-}" != "--skip-scorer" ]] && [[ -n "${ANTHROPIC_API_KEY:-}" || -n "${
   npx tsx processor/issue_generator.ts --limit 5 2>&1 || echo "  WARNING: issue generator failed"
 fi
 
+# 6. Send Telegram notification (only if high-scoring papers exist)
+echo ""
+echo "--- Checking for Telegram notification ---"
+"${SCRIPT_DIR}/notify-telegram.sh" "$DATE" 2>&1 || echo "  WARNING: Telegram notification failed"
+
 echo ""
 echo "=== Pipeline complete at $(date) ==="
