@@ -1,4 +1,5 @@
 # AI Feeds Configuration
+# Copy this file to config.yaml and customize for your setup.
 
 # Feed sources
 sources:
@@ -51,32 +52,37 @@ sources:
       - python
       - typescript
     since: daily
+    max_results: 30
     timeout_seconds: 30
     retries: 3
     delay_seconds: 2.0
-    max_results: 30
 
   producthunt:
-    enabled: false  # Requires OAuth2
+    enabled: false  # Requires Chrome with CDP on port 9222
     topics:
       - artificial-intelligence
+    timeout_seconds: 15
+    retries: 1
+    delay_seconds: 2.0
+    days: 1
+    cdp_endpoint: http://localhost:9222
 
   devto:
     enabled: true
     tag: ai
     top: 7
+    limit: 30
     timeout_seconds: 30
     retries: 3
     delay_seconds: 1.0
-    limit: 30
 
 # Processing
 processor:
   llm:
-    provider: claude  # or openai, ollama
+    provider: claude  # claude, openai, or ollama
     model: claude-sonnet-4-20250514
-  relevance_threshold: 7  # Only surface items scoring 7+
-  max_items_per_source: 10
+    batch_size: 10
+  relevance_threshold: 7  # Only surface papers scoring 7+
 
 # Database
 database:
@@ -84,8 +90,8 @@ database:
 
 # Output
 output:
-  vault_path: ~/vault/knowledge/wikis/ai-engineering/raw/signals
-  format: obsidian  # obsidian, markdown, json
+  vault_path: ~/your-vault-path/signals  # Set to your Obsidian vault signals directory
+  format: obsidian
 
 # Learning plan integration
 learning_plan:
@@ -97,5 +103,3 @@ learning_plan:
     - production AI
     - LLM integration
     - browser automation
-  unchecked_modules: 18
-  phase: 4

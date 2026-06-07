@@ -21,7 +21,7 @@ Build a HuggingFace Daily Papers collector that fetches curated AI/ML papers fro
 
 | Actor | Role |
 |-------|------|
-| Ming (user) | Runs collector manually or via cron, configures via `config.yaml` |
+| User (operator) | Runs collector manually or via cron, configures via `config.yaml` |
 | HF Daily Papers API | External data source, no auth, JSON, no documented rate limit |
 | AI Feeds pipeline | Consumes JSON output — must match Paper interface from arXiv collector |
 

@@ -4,14 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Purpose
 
-AI Feeds is a personal AI industry intelligence system that does two things:
+AI Feeds is an AI industry intelligence system that does two things:
 
 1. **Aggregate signals** — papers, trending repos, news, community discussions from multiple sources
 2. **Drive upskilling** — not just surface news, but evaluate what's worth learning, generate learning issues, and produce hands-on artifacts
 
-The user (Ming) is a developer focused on AI engineering, currently in Phase 4 of an AI/LLM learning plan (79 modules, 77% complete, fine-tuning/production AI). Key interest areas: context engineering, agent architectures, RAG, LLM integration, browser automation, and local dev infrastructure.
-
-**Critical gap**: Learning plan completion hasn't translated into session activity. This project exists to close that gap by converting passive consumption into active learning.
+Key interest areas are configured in `config.yaml` under `learning_plan.interests`. The system scores papers against these interests using an LLM and surfaces only high-relevance content.
 
 ## Architecture
 

@@ -3,3 +3,17 @@ node_modules/
 *.log
 dist/
 .DS_Store
+
+# Personal config (contains vault paths, learning plan data)
+# Copy config.yaml.example to config.yaml and customize
+config.yaml
+
+# Database (user-generated data)
+db/*.sqlite
+
+# Collector/scorer output (generated data)
+collectors/output/*.json
+processor/output/*.json
+
+# Generated issue files
+issues/learn-*.md

@@ -22,7 +22,7 @@ Build an LLM-powered relevance scorer that reads collector output (Paper[]), eva
 | Actor | Role |
 |-------|------|
 | Pipeline orchestrator | Runs collectors then scorer in sequence |
-| Ming (reader) | Consumes scored output to decide what to read |
+| User (reader) | Consumes scored output to decide what to read |
 | LLM provider | Claude, OpenAI, or Ollama that performs scoring |
 | Future preference learner | Will consume scorer output (Phase 4.2) — not in scope |
 

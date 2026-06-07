@@ -1,82 +1,161 @@
 # AI Feeds
 
-Personal AI industry intelligence system. Aggregates signals from papers, trending repos, news, and community discussions — then converts them into hands-on learning artifacts.
+AI industry intelligence system. Aggregates signals from papers, trending repos, news, and community discussions — then converts them into actionable learning artifacts.
 
-## Why This Exists
+## What It Does
 
-You have a 79-module learning plan that's 77% complete. But completion hasn't translated into real capability. This project closes that gap by:
+1. **Collect** — Fetches papers from arXiv, HuggingFace, HN, Reddit, Dev.to, GitHub Trending, Product Hunt
+2. **Score** — LLM-powered relevance scoring against your learning interests
+3. **Store** — SQLite database as source of truth
+4. **Digest** — Generates Obsidian-compatible markdown for daily reading
+5. **Learn** — Auto-generates learning issues from high-scoring papers
 
-1. **Surfacing what matters** — LLM-scored relevance against your learning plan
-2. **Evaluating what's worth learning** — 5-question filter before investing time
-3. **Generating learning issues** — GitHub Issues as contracts with yourself
-4. **Producing artifacts** — not just reading, but building, teaching, and reflecting
+## Quick Start
+
+```bash
+# 1. Clone and install
+git clone <repo-url> ai-feeds
+cd ai-feeds
+npm install
+
+# 2. Configure
+cp config.yaml.example config.yaml
+# Edit config.yaml: set your vault_path, learning interests, enable/disable sources
+
+# 3. Set up LLM provider (for scoring)
+cp .env.example .env
+# Edit .env: add your ANTHROPIC_API_KEY or OPENAI_API_KEY
+
+# 4. Run collectors
+npx tsx collectors/arxiv.ts
+npx tsx collectors/huggingface.ts
+
+# 5. Score papers
+npx tsx processor/scorer.ts --input collectors/output/
+
+# 6. Ingest into database
+npx tsx db/ingest.ts --input collectors/output/
+npx tsx db/ingest.ts --input processor/output/
+
+# 7. Generate digest
+npx tsx db/digest.ts --date $(date +%Y-%m-%d)
+```
 
 ## Feed Sources
 
-| Source | API | Auth |
-|--------|-----|------|
-| arXiv papers | `export.arxiv.org/api/query` | None |
-| HuggingFace Daily Papers | `huggingface.co/api/daily_papers` | None |
-| Hacker News | Firebase + Algolia APIs | None |
-| Reddit (r/MachineLearning, r/LocalLLaMA) | JSON API | None |
-| GitHub Trending | HTML scrape / Search API | None |
-| Semantic Scholar | REST API | Free key optional |
-| Product Hunt | GraphQL API | OAuth2 |
-| Dev.to | Forem API | None |
-| Lobste.rs | JSON API | None |
-| Newsletters | RSS feeds | None |
+| Source | API | Auth | Status |
+|--------|-----|------|--------|
+| arXiv | REST API | None | ✅ |
+| HuggingFace | Daily Papers API | None | ✅ |
+| Hacker News | Firebase + Algolia | None | ✅ |
+| Reddit | JSON API | None | ✅ |
+| GitHub Trending | Search API | None | ✅ |
+| Dev.to | Forem API | None | ✅ |
+| Product Hunt | CDP scraping | Chrome session | ✅ |
 
 ## Architecture
 
 ```
-Feed Collectors → LLM Processor → Obsidian Vault + GitHub Issues
-                  (relevance,      (daily signal    (learning
-                   summarize,       snapshots)       contracts)
-                   dedup)
+┌─────────────────────────────────────────────────────┐
+│                   COLLECTORS                         │
+├────────┬────────┬────────┬────────┬────────┬────────┤
+│  arXiv │   HF   │   HN   │ Reddit │ Dev.to │ GitHub │
+└───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┘
+    └────────┴────────┴────────┴────────┴────────┘
+                        │
+               collectors/output/*.json
+                        │
+                ┌───────▼───────┐
+                │  LLM Scorer   │
+                └───────┬───────┘
+                        │
+               processor/output/*.json
+                        │
+                ┌───────▼───────┐
+                │    Ingest     │
+                └───────┬───────┘
+                        │
+                ┌───────▼───────┐
+                │    SQLite     │◄── Issue Generator
+                └───────┬───────┘◄── Weekly Rollup
+                        │
+                ┌───────▼───────┐
+                │    Digest     │
+                └───────┬───────┘
+                        │
+                Obsidian Markdown
 ```
 
-## Project Structure
+## Configuration
 
+### config.yaml
+
+Copy `config.yaml.example` to `config.yaml` and customize:
+
+- **sources** — enable/disable collectors, set API parameters
+- **processor** — LLM provider (claude/openai/ollama), model, batch size
+- **database** — SQLite path
+- **output** — vault path for Obsidian markdown
+- **learning_plan** — your interest areas for relevance scoring
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and set:
+
+- `ANTHROPIC_API_KEY` — for Claude provider
+- `OPENAI_API_KEY` — for OpenAI provider
+
+Ollama requires no API key (runs locally).
+
+## CLI Commands
+
+### Collectors
+```bash
+npx tsx collectors/arxiv.ts [--dry-run] [--verbose]
+npx tsx collectors/huggingface.ts [--dry-run] [--verbose]
+npx tsx collectors/hn.ts [--dry-run] [--verbose]
+npx tsx collectors/reddit.ts [--dry-run] [--verbose]
+npx tsx collectors/devto.ts [--dry-run] [--verbose]
+npx tsx collectors/github.ts [--dry-run] [--verbose]
+npx tsx collectors/producthunt.ts [--dry-run] [--days N] [--verbose]
 ```
-ai-feeds/
-├── CLAUDE.md           — Claude Code guidance
-├── README.md           — This file
-├── research/           — Research reports
-│   ├── landscape-report.md    — Existing services & tools landscape
-│   └── upskilling-system.md   — Learn-by-doing framework
-├── collectors/         — Feed collection scripts (planned)
-├── processor/          — LLM scoring & summarization (planned)
-├── issues/             — Learning issue templates (planned)
-└── examples/           — Working examples from learning (planned)
+
+### Scorer
+```bash
+npx tsx processor/scorer.ts --input <file-or-dir> [--threshold N] [--dry-run]
 ```
 
-## Upskilling Framework
+### Database
+```bash
+npx tsx db/ingest.ts --input <file-or-dir> [--db path.sqlite]
+npx tsx db/digest.ts --date YYYY-MM-DD [--threshold N] [--output path.md]
+```
 
-See `research/upskilling-system.md` for the full framework. Key components:
+### Issue Generator
+```bash
+npx tsx processor/issue_generator.ts [--limit N] [--dry-run]
+```
 
-- **5-Question Evaluation Filter** — score any new technique before investing time
-- **Issue-Driven Learning** — GitHub Issues with acceptance criteria as learning contracts
-- **Weekly Sprints** — Monday=Consume, Tue-Thu=Implement, Friday=Teach & Reflect
-- **Learn-by-Doing Pipeline** — CONSUME (10%) → IMPLEMENT (60%) → TEACH (20%) → REFLECT (10%)
+### Weekly Rollup
+```bash
+npx tsx processor/rollup.ts [--weeks N] [--output path.md]
+```
 
-## Reference Projects
+## Tests
 
-| Project | Stars | What to Borrow |
-|---------|-------|----------------|
-| [Horizon](https://github.com/Thysrael/Horizon) | 5.6k | Scoring system, MCP exposure |
-| [Follow Builders](https://github.com/zarazhangrui/follow-builders) | 5k | Person-centric signal source |
-| [Meridian](https://github.com/iliane5/meridian) | 2.4k | Clustering, story continuity |
-| [ClawFeed](https://github.com/kevinho/clawfeed) | 2.2k | Multi-frequency digests, UI |
-| [agents-radar](https://github.com/duanyytop/agents-radar) | 800 | Broadest source coverage |
-| [CondenseIt](https://github.com/wildlifechorus/condenseit) | 60 | Preference learning engine |
-| [arxiv-digest](https://github.com/matouskozak/arxiv-digest) | 2 | Papers as GitHub Issues |
+```bash
+npx vitest run          # All tests (332 tests)
+npx vitest run tests/arxiv.test.ts  # Single file
+```
 
-## Status
+## Dependencies
 
-🟡 Early design phase — research complete, architecture defined, ready for implementation.
+- Node.js 18+
+- `playwright` — for Product Hunt CDP scraping
+- `better-sqlite3` — for database
+- `fast-xml-parser` — for arXiv XML parsing
+- `yaml` — for config file parsing
 
-## Related Vault Notes
-- `knowledge/wikis/ai-engineering/wiki/concepts/signal-aggregation.md`
-- `knowledge/wikis/ai-engineering/wiki/concepts/signal-detection.md`
-- `knowledge/wikis/ai-engineering/wiki/sources/ai-llm-learning-plan.md`
-- `knowledge/wikis/ai-engineering/wiki/concepts/learning-plan-phases.md`
+## License
+
+MIT

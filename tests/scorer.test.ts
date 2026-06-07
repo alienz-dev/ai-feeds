@@ -13,6 +13,10 @@
  * Tests full pipeline including prompt construction and response parsing.
  */
 
+// Set dummy API keys for tests (API key validation happens before fetch)
+process.env.ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || "test-key-anthropic";
+process.env.OPENAI_API_KEY = process.env.OPENAI_API_KEY || "test-key-openai";
+
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import type { Paper } from "../collectors/common.js";
 import {

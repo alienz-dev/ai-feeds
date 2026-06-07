@@ -22,7 +22,7 @@ Build a CLI collector in TypeScript that fetches new AI/ML papers from the arXiv
 
 | Actor | Role |
 |-------|------|
-| Ming (user) | Runs collector manually or via cron, configures via `config.yaml` |
+| User (operator) | Runs collector manually or via cron, configures via `config.yaml` |
 | arXiv API | External data source, no auth, Atom XML, 3s rate limit |
 | LLM Processor (downstream) | Reads JSON output for relevance scoring — not in scope |
 | Obsidian Vault (downstream) | Receives formatted markdown later — not in scope |

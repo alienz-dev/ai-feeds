@@ -68,12 +68,16 @@ async function makeRequest(
   config: LlmProviderConfig
 ): Promise<Response> {
   switch (config.provider) {
-    case "claude":
+    case "claude": {
+      const claudeKey = config.apiKey || process.env.ANTHROPIC_API_KEY || "";
+      if (!claudeKey) {
+        throw new Error("ANTHROPIC_API_KEY not set. Export it or pass via config.");
+      }
       return fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": config.apiKey ?? "",
+          "x-api-key": claudeKey,
           "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
@@ -82,13 +86,16 @@ async function makeRequest(
           messages: [{ role: "user", content: prompt }],
         }),
       });
+    }
 
-    case "openai":
+    case "openai": {
+      const openaiKey = config.apiKey || process.env.OPENAI_API_KEY || "";
+      if (!openaiKey) throw new Error("OPENAI_API_KEY not set. Export it or pass --api-key.");
       return fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${config.apiKey ?? ""}`,
+          Authorization: `Bearer ${openaiKey}`,
         },
         body: JSON.stringify({
           model: config.model,
@@ -96,6 +103,7 @@ async function makeRequest(
           response_format: { type: "json_object" },
         }),
       });
+    }
 
     case "ollama":
       return fetch("http://localhost:11434/api/chat", {
