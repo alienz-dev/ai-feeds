@@ -10,6 +10,8 @@ config.yaml
 
 # Database (user-generated data)
 db/*.sqlite
+db/*.sqlite-shm
+db/*.sqlite-wal
 
 # Collector/scorer output (generated data)
 collectors/output/*.json
