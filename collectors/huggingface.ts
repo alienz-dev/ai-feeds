@@ -1,11 +1,11 @@
 /**
- * arXiv Collector — main entry point.
+ * HuggingFace Daily Papers Collector — main entry point.
  *
- * Fetches papers from arXiv API, deduplicates by version-stripped ID,
- * and returns a structured ArxivResult.
+ * Fetches papers from HuggingFace Daily Papers API, deduplicates by ID,
+ * and returns a structured HfResult.
  */
 
-import { ArxivClient, stripVersion } from "./arxiv-client.js";
+import { HfClient } from "./hf-client.js";
 import { log, setupLogging } from "./common.js";
 import type { Paper } from "./common.js";
 import { parseArgs } from "node:util";
@@ -14,126 +14,113 @@ import path from "node:path";
 import YAML from "yaml";
 
 // Re-export types for consumers
-export type { Paper } from "./arxiv-client.js";
+export type { Paper } from "./common.js";
 
-export interface ArxivResult {
-  source: "arxiv";
+export interface HfResult {
+  source: "huggingface";
   fetched_at: string;
-  categories_queried: string[];
   total_results: number;
   warnings: string[];
   papers: Paper[];
 }
 
-export interface ArxivConfig {
+export interface HfConfig {
   enabled: boolean;
-  categories: string[];
-  max_results: number;
-  delay_seconds: number;
+  limit: number;
   days_back: number;
   timeout_seconds: number;
   retries: number;
+  delay_seconds: number;
 }
 
-const DEFAULTS: ArxivConfig = {
+const DEFAULTS: HfConfig = {
   enabled: true,
-  categories: ["cs.AI", "cs.CL", "cs.LG", "stat.ML"],
-  max_results: 150,
-  delay_seconds: 3.0,
+  limit: 30,
   days_back: 2,
   timeout_seconds: 30,
   retries: 3,
+  delay_seconds: 1.0,
 };
 
 /**
- * Load arXiv config by merging a partial config (possibly nested under
- * sources.arxiv) with defaults. Only overrides keys that are explicitly
+ * Load HuggingFace config by merging a partial config (possibly nested under
+ * sources.huggingface) with defaults. Only overrides keys that are explicitly
  * provided — missing keys fall back to defaults.
  */
-export function loadConfig(rawConfig: unknown): ArxivConfig {
-  // Support both flat config and nested sources.arxiv structure
+export function loadConfig(rawConfig: unknown): HfConfig {
+  // Support both flat config and nested sources.huggingface structure
   const cfg = rawConfig as Record<string, any> | undefined;
-  const raw = cfg?.sources?.arxiv ?? cfg ?? {};
+  const raw = cfg?.sources?.huggingface ?? cfg ?? {};
 
   return {
     enabled: raw.enabled ?? DEFAULTS.enabled,
-    categories: raw.categories ?? DEFAULTS.categories,
-    max_results: raw.max_results ?? DEFAULTS.max_results,
-    delay_seconds: raw.delay_seconds ?? DEFAULTS.delay_seconds,
+    limit: raw.limit ?? DEFAULTS.limit,
     days_back: raw.days_back ?? DEFAULTS.days_back,
     timeout_seconds: raw.timeout_seconds ?? DEFAULTS.timeout_seconds,
     retries: raw.retries ?? DEFAULTS.retries,
+    delay_seconds: raw.delay_seconds ?? DEFAULTS.delay_seconds,
   };
 }
 
 /**
- * Deduplicate papers by version-stripped arXiv ID.
- * When the same paper appears at multiple versions (v1, v2), keep the latest.
+ * Deduplicate papers by ID. Keeps the first occurrence.
  */
 function dedupPapers(papers: Paper[]): Paper[] {
-  const byBaseId = new Map<string, Paper>();
+  const seen = new Set<string>();
+  const result: Paper[] = [];
 
   for (const paper of papers) {
-    const baseId = stripVersion(paper.id);
-    const existing = byBaseId.get(baseId);
-
-    if (!existing) {
-      byBaseId.set(baseId, paper);
-    } else {
-      // Keep the one with the higher version number (ties go to later entry)
-      const existingVer = parseInt(
-        existing.id.match(/v(\d+)$/)?.[1] ?? "0",
-        10
-      );
-      const newVer = parseInt(
-        paper.id.match(/v(\d+)$/)?.[1] ?? "0",
-        10
-      );
-      if (newVer > existingVer) {
-        byBaseId.set(baseId, paper);
-      }
+    if (!seen.has(paper.id)) {
+      seen.add(paper.id);
+      result.push(paper);
     }
   }
 
-  return Array.from(byBaseId.values());
+  return result;
 }
 
 export interface FetchOptions {
-  client?: ArxivClient;
+  client?: HfClient;
 }
 
 /**
- * Fetch arXiv papers based on config. Supports dependency injection
+ * Fetch HuggingFace papers based on config. Supports dependency injection
  * via the options.client parameter for testability.
  */
-export async function fetchArxiv(
-  config: ArxivConfig,
+export async function fetchHuggingFace(
+  config: HfConfig,
   options?: FetchOptions
-): Promise<ArxivResult> {
+): Promise<HfResult> {
   const warnings: string[] = [];
   let papers: Paper[] = [];
 
+  if (!config.enabled) {
+    return {
+      source: "huggingface",
+      fetched_at: new Date().toISOString(),
+      total_results: 0,
+      warnings,
+      papers,
+    };
+  }
+
   const client =
     options?.client ??
-    new ArxivClient({
+    new HfClient({
       delaySeconds: config.delay_seconds,
       timeoutSeconds: config.timeout_seconds,
       retries: config.retries,
     });
 
   try {
-    papers = await client.fetchPapers(
-      config.categories,
-      config.max_results,
-      config.days_back
-    );
+    papers = await client.fetchPapers(config.limit, config.days_back);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     warnings.push(msg);
     log.warn(`fetchPapers failed: ${msg}`);
   }
 
-  // Dedup by version-stripped ID
+  // Dedup by ID
   papers = dedupPapers(papers);
 
   // Normalize titles (strip newlines, collapse whitespace, trim)
@@ -142,10 +129,9 @@ export async function fetchArxiv(
     title: p.title.replace(/\s+/g, " ").trim(),
   }));
 
-  const result: ArxivResult = {
-    source: "arxiv",
+  const result: HfResult = {
+    source: "huggingface",
     fetched_at: new Date().toISOString(),
-    categories_queried: [...config.categories],
     total_results: papers.length,
     warnings,
     papers,
@@ -170,7 +156,7 @@ async function main(): Promise<void> {
   });
 
   if (values.help) {
-    console.log(`Usage: arxiv [options]
+    console.log(`Usage: huggingface [options]
 
 Options:
   -h, --help         Show this help message
@@ -181,7 +167,7 @@ Options:
     process.exit(0);
   }
 
-  // Configure logging (AC-13)
+  // Configure logging
   setupLogging(values.verbose ? "debug" : "info");
 
   // Load config
@@ -197,26 +183,23 @@ Options:
   const config = loadConfig(rawConfig);
 
   if (!config.enabled) {
-    log.info("arXiv collector is disabled in config");
+    log.info("HuggingFace collector is disabled in config");
     process.exit(0);
   }
 
-  const result = await fetchArxiv(config);
+  const result = await fetchHuggingFace(config);
 
-  // Atomic write: write to .tmp then rename
-  // AC-10: Output goes to collectors/output/ directory
   if (!values["dry-run"]) {
     const outputDir = path.resolve(
       path.dirname(new URL(import.meta.url).pathname),
       "output"
     );
-    // Ensure output directory exists
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
     const today = new Date().toISOString().slice(0, 10);
-    const filename = `arxiv-${today}.json`;
+    const filename = `huggingface-${today}.json`;
     const outPath = path.join(outputDir, filename);
     const tmpPath = outPath + ".tmp";
 
@@ -225,7 +208,6 @@ Options:
       fs.renameSync(tmpPath, outPath);
       log.info(`Wrote ${result.total_results} papers to ${outPath}`);
     } catch (err) {
-      // Clean up temp file on failure
       try { fs.unlinkSync(tmpPath); } catch { /* ignore */ }
       throw err;
     }
@@ -235,7 +217,6 @@ Options:
   }
 }
 
-// Run CLI if this is the main module
 main().catch((err) => {
   console.error(err);
   process.exit(1);

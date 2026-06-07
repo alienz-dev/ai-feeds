@@ -1,0 +1,179 @@
+{
+  "source": "huggingface",
+  "fetched_at": "2026-06-07T01:05:09.865Z",
+  "total_results": 5,
+  "warnings": [],
+  "papers": [
+    {
+      "id": "2606.05515",
+      "title": "BRepCLIP: Contrastive Multimodal Pretraining on BRep Primitives for CAD Understanding",
+      "abstract": "Learning representations of CAD models is a largely open problem. While 3D representation learning has flourished around point clouds and meshes, the native format of CAD - boundary representations BReps, which encodes exact parametric surfaces, curves, and their topology, has received little attention as a representation learning substrate. We introduce BRepCLIP, the first framework to align BRep geometry with language and image embeddings through contrastive pretraining. We model each CAD object as a sequence of face and edge tokens with separate discrete vocabularies for surface and curve geometry, augmented with spatial and semantic descriptors that capture surface types (e.g., cylindrical, torus, NURBS) and curve primitives (e.g., line, arc, B-spline). A transformer encoder aggregates these tokens into a global BRep embedding, aligned with CLIP's text and image encoders via a joint contrastive objective. BRepCLIP generates more discriminative and semantically grounded embeddings than existing point-based alternatives, improving Top-1 retrieval over OpenShape by 40.4%, 22.0%, and 23.9% on ABC, CADParser, and Automate, respectively, and improving zero-shot classification on FabWave by 15% in Top-1 score. We further demonstrate its utility as a CAD-aware similarity metric for evaluating text and image-conditioned CAD generation, establishing the importance of structure-aware pretraining for multimodal CAD understanding. Project page is available at https://muhammadusama100.github.io/BrepClip2026/",
+      "url": "https://huggingface.co/papers/2606.05515",
+      "pdf_url": "https://arxiv.org/pdf/2606.05515",
+      "authors": [
+        "Muhammad Usama",
+        "Didier Stricker",
+        "Mohammad Sadil Khan",
+        "Muhammad Zeshan Afzal"
+      ],
+      "categories": [
+        "BReps",
+        "boundary representations",
+        "CAD models",
+        "CLIP",
+        "contrastive pretraining",
+        "transformer encoder",
+        "face tokens",
+        "edge tokens",
+        "discrete vocabularies",
+        "spatial descriptors",
+        "semantic descriptors",
+        "global BRep embedding",
+        "multimodal CAD understanding",
+        "Top-1 retrieval",
+        "zero-shot classification"
+      ],
+      "primary_category": "BReps",
+      "published": "2026-06-03T00:00:00.000Z",
+      "updated": "2026-06-03T00:00:00.000Z"
+    },
+    {
+      "id": "2606.06486",
+      "title": "Regret Minimization with Adaptive Opponents in Repeated Games",
+      "abstract": "In this paper, we study regret minimization in repeated games with adaptive opponents who can respond based on histories of play. The standard metric of external regret in online learning is known to fail to capture such adaptivity. To account for players' counterfactual reasoning, we introduce {\\tt Repeated Policy Regret (RP-Regret)}, a game-theoretic metric that measures the difference between the realized and the best-in-hindsight accumulated utility when all players can respond to the history of play. Compared to existing regret notions in this setting, ours is native to repeated game playing, enabling stronger comparators and opponents with fewer constraints, while maintaining the possibility of finding better equilibria when all players minimize it. We first identify necessary conditions for obtaining {\\tt RP-Regret} sublinear in time, on the variation of the player's comparator strategies in the regret definition and on the memories of both the comparator and opponents' strategies. We then study additional conditions and provable algorithms to minimize {\\tt RP-Regret}, which is by definition non-convex in the strategy space. To address this challenge, we propose three algorithms: (i) one based on an optimization oracle, as assumed in some prior work in online non-convex learning; (ii) one that minimizes a convex and linearized surrogate of {\\tt RP-Regret} at each iteration; (iii) one that directly minimizes {\\tt RP-Regret} when opponents change strategies slowly. Furthermore, when all players can run algorithms to minimize the {\\tt RP-Regret} (or its linearized variant), certain subgame perfect equilibria of the repeated game can be learned. We also provide experiments showing that minimizing our regret notions can lead to more cooperative solutions with higher utility in games such as Stag-Hunt.",
+      "url": "https://huggingface.co/papers/2606.06486",
+      "pdf_url": "https://arxiv.org/pdf/2606.06486",
+      "authors": [
+        "Mingyang Liu",
+        "Asuman Ozdaglar",
+        "Tiancheng Yu",
+        "Kaiqing Zhang"
+      ],
+      "categories": [
+        "regret minimization",
+        "repeated games",
+        "adaptive opponents",
+        "external regret",
+        "Repeated Policy Regret",
+        "sublinear regret",
+        "non-convex optimization",
+        "convex surrogate",
+        "linearized regret",
+        "subgame perfect equilibria"
+      ],
+      "primary_category": "regret minimization",
+      "published": "2026-06-04T00:00:00.000Z",
+      "updated": "2026-06-04T00:00:00.000Z"
+    },
+    {
+      "id": "2606.02956",
+      "title": "The Road Ahead in Autonomous Driving: The KITScenes Multimodal Dataset",
+      "abstract": "Existing autonomous driving datasets have enabled major progress, but fall short in sensor fidelity, map completeness, or geographic diversity. We present KITScenes Multimodal, a European dataset built around high-fidelity sensors and maps. Our fully synchronized sensor suite combines high-resolution global-shutter cameras, long-range lidar beyond 400m, 4D imaging radar, and redundant GNSS/INS localization. Our HD maps are, to our knowledge, the most complete of any sensor dataset, validated through autonomous driving trials on open-source software. For the first time in a public dataset, all driving-relevant traffic elements, such as traffic lights, are mapped in 3D to a reprojection-accurate level with full topological connectivity. Recorded in cities with irregular street layouts and mixed traffic modes, our dataset complements existing datasets by broadening the available geographic diversity. We also introduce four benchmarks, each advancing spatial learning for embodied AI: online HD map construction, long-range depth estimation, novel view synthesis, and end-to-end driving. Project page: https://kitscenes.com/",
+      "url": "https://huggingface.co/papers/2606.02956",
+      "pdf_url": "https://arxiv.org/pdf/2606.02956",
+      "authors": [
+        "Richard Schwarzkopf",
+        "Fabian Immel",
+        "Alexander Blumberg",
+        "Jonas Merkert",
+        "Nils Rack",
+        "Kaiwen Wang",
+        "Fabian Konstantinidis",
+        "Julian Truetsch",
+        "Carlos Fernandez",
+        "Annika Bätz",
+        "Kevin Rösch",
+        "Marlon Steiner",
+        "Willi Poh",
+        "Yinzhe Shen",
+        "Royden Wagner",
+        "Felix Hauser",
+        "Dominik Strutz",
+        "Jaime Villa",
+        "Gleb Stepanov",
+        "Holger Caesar",
+        "Ömer Şahin Taş",
+        "Frank Bieder",
+        "Jan-Hendrik Pauls",
+        "Christoph Stiller"
+      ],
+      "categories": [
+        "autonomous driving datasets",
+        "high-fidelity sensors",
+        "HD maps",
+        "4D imaging radar",
+        "GNSS/INS localization",
+        "embodied AI",
+        "spatial learning",
+        "online HD map construction",
+        "long-range depth estimation",
+        "novel view synthesis",
+        "end-to-end driving"
+      ],
+      "primary_category": "autonomous driving datasets",
+      "published": "2026-06-01T00:00:00.000Z",
+      "updated": "2026-06-01T00:00:00.000Z"
+    },
+    {
+      "id": "2606.04880",
+      "title": "MAOAM: Unified Object and Material Selection with Vision-Language Models",
+      "abstract": "Selection is a core operation in interactive image editing. To be practical, a user should be able to specify and disambiguate the desired selection region through either text or click-based interactions, and the system should support selecting not only objects but also other criteria, such as materials. Material-based selection is valuable for tasks like re-texturing surfaces or editing instances of a specific material. However, existing vision-language-model (VLM) based selection methods are object-centric and typically support a single interaction modality, limiting their applicability. In this work, we thus present Mask Any Object And Material (MAOAM), a unified selection framework that enables precise object and material-level selection across both text- and click-based interactions. MAOAM leverages a VLM with a segmentation head to produce pixel-accurate masks from user prompts: the VLM interprets the user's selection intent (object or material-level) and encodes visual entities, attributes, and spatial relations, while the segmentation head decodes the output token into a mask. A key challenge is the lack of material selection datasets with text annotations. We propose a scalable data generation pipeline: we collect real and synthetic images with material masks, and leverage VLMs to generate material descriptions with rich visual-semantics. We train MAOAM with a multi-task objective over click and text-based selection, along with an auxiliary VQA task derived from the material descriptions to facilitate deeper material understanding. Despite being trained with uni-modal prompts, our model exhibits an emergent improvement in selection when combining text and clicks at inference, enabling flexible image editing workflows. Experiments demonstrate accurate and coherent selections across diverse objects, materials, and interaction scenarios, highlighting robustness in practice.",
+      "url": "https://huggingface.co/papers/2606.04880",
+      "pdf_url": "https://arxiv.org/pdf/2606.04880",
+      "authors": [
+        "Jaden Park",
+        "Valentin Deschaintre",
+        "Jason Kuen",
+        "Kangning Liu",
+        "Iliyan Georgiev",
+        "Krishna Kumar Singh",
+        "Yong Jae Lee",
+        "Michael Fischer"
+      ],
+      "categories": [
+        "vision-language-model",
+        "segmentation head",
+        "pixel-accurate masks",
+        "visual entities",
+        "spatial relations",
+        "multi-task objective",
+        "VQA task",
+        "emergent improvement",
+        "interaction modalities"
+      ],
+      "primary_category": "vision-language-model",
+      "published": "2026-06-02T00:00:00.000Z",
+      "updated": "2026-06-02T00:00:00.000Z"
+    },
+    {
+      "id": "2605.27079",
+      "title": "Trust Region Q Adjoint Matching",
+      "abstract": "Off-policy reinforcement learning of pretrained flow policies remains challenging due to the instability of optimization arising from the multi-step sampling process. Recently, Q-learning with Adjoint Matching (QAM) addressed this issue by reformulating into a memoryless stochastic optimal control (SOC) problem with a learned critic. However, QAM inherits a fundamental fragility of critic-guided improvement: small critic errors are amplified when critics are ill-conditioned, often leading to model collapse. This paper introduces Trust Region Q-Adjoint Matching (TRQAM), a stable off-policy fine-tuning algorithm that adaptively controls the path-space KL with pretrained flow policies through projected dual descent. Specifically, we optimize the trust-region parameter λ in SOC dynamics, and theoretically show that the path-space KL can be represented by a closed-form function of λ. As a result, our method can precisely control the exact deviation from pretrained flow policies, achieving stable off-policy RL. Through experiments on 50 OGBench tasks, TRQAM consistently outperforms prior arts in both offline RL and offline-to-online RL. In particular, TRQAM achieves an overall success rate of 68% in offline RL, substantially improves the strongest baseline at 46%.",
+      "url": "https://huggingface.co/papers/2605.27079",
+      "pdf_url": "https://arxiv.org/pdf/2605.27079",
+      "authors": [
+        "Yonghoon Dong",
+        "Kyungmin Lee",
+        "Changyeon Kim",
+        "Jaehyuk Kim",
+        "Jinwoo Shin"
+      ],
+      "categories": [
+        "off-policy reinforcement learning",
+        "flow policies",
+        "optimization instability",
+        "Q-learning with Adjoint Matching",
+        "stochastic optimal control",
+        "critic-guided improvement",
+        "model collapse",
+        "Trust Region Q-Adjoint Matching",
+        "projected dual descent",
+        "path-space KL divergence",
+        "pretrained flow policies"
+      ],
+      "primary_category": "off-policy reinforcement learning",
+      "published": "2026-05-26T00:00:00.000Z",
+      "updated": "2026-05-26T00:00:00.000Z"
+    }
+  ]
+}

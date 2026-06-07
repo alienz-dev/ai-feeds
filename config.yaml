@@ -18,6 +18,10 @@ sources:
   huggingface:
     enabled: true
     limit: 30
+    days_back: 2
+    timeout_seconds: 30
+    retries: 3
+    delay_seconds: 1.0
 
   hackernews:
     enabled: true

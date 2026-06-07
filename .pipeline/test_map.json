@@ -1,6 +1,7 @@
 {
-  "spec": "specs/SPEC-ARXIV.md",
-  "visible": ["tests/arxiv.test.ts"],
+  "spec": "specs/SPEC-HF.md",
+  "visible": ["tests/huggingface.test.ts"],
   "hidden": [],
-  "all_red": true
+  "all_red": true,
+  "timestamp": "2026-06-07T11:03:00Z"
 }

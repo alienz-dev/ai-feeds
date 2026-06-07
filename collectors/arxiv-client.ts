@@ -4,6 +4,7 @@
 
 import { XMLParser } from "fast-xml-parser";
 import { log } from "./common.js";
+import type { Paper } from "./common.js";
 
 export interface ArxivClientConfig {
   delaySeconds: number;
@@ -11,18 +12,8 @@ export interface ArxivClientConfig {
   retries: number;
 }
 
-export interface Paper {
-  id: string;
-  title: string;
-  abstract: string;
-  url: string;
-  pdf_url: string;
-  authors: string[];
-  categories: string[];
-  primary_category: string;
-  published: string;
-  updated: string;
-}
+// Re-export Paper for backward compatibility
+export type { Paper } from "./common.js";
 
 const ARXIV_API = "http://export.arxiv.org/api/query";
 

@@ -2,6 +2,20 @@
  * Shared utilities for all collectors.
  */
 
+/** Paper interface shared across all collectors (arXiv, HuggingFace, etc.) */
+export interface Paper {
+  id: string;
+  title: string;
+  abstract: string;
+  url: string;
+  pdf_url: string;
+  authors: string[];
+  categories: string[];
+  primary_category: string;
+  published: string;
+  updated: string;
+}
+
 const LEVELS: Record<string, number> = {
   debug: 0,
   info: 1,
