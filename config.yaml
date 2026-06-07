@@ -65,6 +65,10 @@ processor:
   relevance_threshold: 7  # Only surface items scoring 7+
   max_items_per_source: 10
 
+# Database
+database:
+  path: db/ai-feeds.sqlite
+
 # Output
 output:
   vault_path: ~/vault/knowledge/wikis/ai-engineering/raw/signals

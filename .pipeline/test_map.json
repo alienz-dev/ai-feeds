@@ -1,7 +1,7 @@
 {
-  "spec": "specs/SPEC-SCORER.md",
-  "visible": ["tests/scorer.test.ts"],
+  "spec": "specs/SPEC-DB.md",
+  "visible": ["tests/db.test.ts"],
   "hidden": [],
   "all_red": true,
-  "timestamp": "2026-06-07T11:38:00Z"
+  "timestamp": "2026-06-07T12:43:00Z"
 }
