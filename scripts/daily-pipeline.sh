@@ -28,7 +28,12 @@ done
 
 # 2. Run scorer (if API key is set and --skip-scorer not passed)
 if [[ "${1:-}" != "--skip-scorer" ]]; then
-  if [[ -n "${ANTHROPIC_API_KEY:-}" ]] || [[ -n "${OPENAI_API_KEY:-}" ]]; then
+  # Source .env if it exists
+  if [[ -f .env ]]; then
+    set -a; source .env; set +a
+  fi
+
+  if [[ -n "${ANTHROPIC_API_KEY:-}" ]] || [[ -n "${OPENAI_API_KEY:-}" ]] || [[ -n "${OPENROUTER_API_KEY:-}" ]]; then
     echo ""
     echo "--- Running LLM scorer ---"
     npx tsx processor/scorer.ts --input collectors/output/ 2>&1 || echo "  WARNING: scorer failed"
