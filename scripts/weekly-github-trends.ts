@@ -188,6 +188,87 @@ function generateReport(verdicts: Verdict[], weeks: number): string {
   return lines.join("\n");
 }
 
+// Generate Telegram-friendly message
+function generateTelegramMessage(verdicts: Verdict[], weeks: number): string {
+  const adopt = verdicts.filter(v => v.verdict === "adopt").sort((a, b) => b.score - a.score);
+  const watch = verdicts.filter(v => v.verdict === "watch").sort((a, b) => b.score - a.score);
+
+  const lines: string[] = [];
+
+  lines.push(`🔬 GitHub AI/ML Trends — Last ${weeks} Week${weeks > 1 ? 's' : ''}`);
+  lines.push('');
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+  lines.push('');
+  lines.push(`📊 Analyzed: ${verdicts.length} repos`);
+  lines.push(`🟢 Adopt: ${adopt.length}  🟡 Watch: ${watch.length}`);
+  lines.push('');
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+
+  if (adopt.length > 0) {
+    lines.push('');
+    lines.push('🟢 ADOPT — Add to research list');
+    lines.push('');
+    for (const v of adopt.slice(0, 5)) {
+      const desc = v.repo.description.length > 80
+        ? v.repo.description.slice(0, 80) + '...'
+        : v.repo.description;
+      lines.push(`⭐ ${v.repo.name} (⭐${v.repo.stars})`);
+      lines.push(`   ${desc}`);
+      lines.push(`   → ${v.action_items[0] || 'Explore repo'}`);
+      lines.push('');
+    }
+  }
+
+  if (watch.length > 0) {
+    lines.push('🟡 WATCH — Monitor progress');
+    lines.push('');
+    for (const v of watch.slice(0, 5)) {
+      lines.push(`📌 ${v.repo.name} (⭐${v.repo.stars})`);
+      lines.push(`   ${v.reasoning.slice(0, 80)}...`);
+    }
+  }
+
+  lines.push('');
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+  lines.push(`📄 Full report saved to vault`);
+
+  return lines.join('\n');
+}
+
+// Send Telegram notification
+async function sendTelegram(message: string): Promise<void> {
+  try {
+    // Get token from pass
+    const { execSync } = await import("child_process");
+    const token = execSync("pass show telegram/agent-bot-token 2>/dev/null", { encoding: "utf-8" }).trim();
+    const chatId = "8241902980";
+
+    if (!token) {
+      console.log("No Telegram token found, skipping notification");
+      return;
+    }
+
+    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        disable_web_page_preview: true,
+      }),
+    });
+
+    const result = await response.json() as any;
+    if (result.ok) {
+      console.log("✅ Telegram notification sent");
+    } else {
+      console.log("❌ Telegram error:", result.description);
+    }
+  } catch (err: any) {
+    console.log("⚠️ Telegram notification failed:", err.message);
+  }
+}
+
 // Main
 async function main() {
   const { values } = parseArgs({
@@ -195,6 +276,7 @@ async function main() {
       help: { type: "boolean", short: "h", default: false },
       weeks: { type: "string", short: "w", default: "4" },
       output: { type: "string", short: "o" },
+      notify: { type: "boolean", short: "n", default: false },
     },
     strict: false,
   });
@@ -206,6 +288,7 @@ Options:
   -h, --help         Show this help
   -w, --weeks <n>    Weeks to look back (default: 4)
   -o, --output <path> Output file (default: stdout)
+  -n, --notify       Send Telegram notification
 `);
     process.exit(0);
   }
@@ -260,6 +343,19 @@ Options:
     console.log(`\nReport written to ${values.output}`);
   } else {
     console.log("\n" + report);
+  }
+
+  // Send Telegram notification if requested
+  if (values.notify) {
+    const adopt = allVerdicts.filter(v => v.verdict === "adopt");
+    const watch = allVerdicts.filter(v => v.verdict === "watch");
+
+    if (adopt.length > 0 || watch.length > 0) {
+      const telegramMsg = generateTelegramMessage(allVerdicts, weeks);
+      await sendTelegram(telegramMsg);
+    } else {
+      console.log("No adopt/watch items, skipping Telegram notification");
+    }
   }
 }
 

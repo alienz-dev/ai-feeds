@@ -18,6 +18,16 @@ if [[ -z "$TOKEN" ]]; then
   exit 1
 fi
 
+# HTML escape function
+html_escape() {
+  local s="$1"
+  s="${s//&/&amp;}"
+  s="${s//</&lt;}"
+  s="${s//>/&gt;}"
+  s="${s//\"/&quot;}"
+  echo "$s"
+}
+
 # Query high-scoring papers from SQLite
 DB_PATH="db/ai-feeds.sqlite"
 if [[ ! -f "$DB_PATH" ]]; then
@@ -46,14 +56,18 @@ TOP_PAPERS=$(sqlite3 -separator '|' "$DB_PATH" "
   LIMIT 5;
 " 2>/dev/null || echo "")
 
-# Build message
-MSG="📊 <b>AI Feeds Daily — ${DATE}</b>
+# Build message with clean formatting
+MSG="📊 AI Feeds Daily — ${DATE}
 
-Papers collected: ${TOTAL}
-🔥 High relevance (8+): ${HIGH}
-📋 Medium relevance (7): ${MEDIUM}
+━━━━━━━━━━━━━━━━━━━━
 
-<b>Top Papers:</b>
+📋 Collected: ${TOTAL} papers
+🔥 High (8+): ${HIGH}
+📌 Medium (7): ${MEDIUM}
+
+━━━━━━━━━━━━━━━━━━━━
+
+🏆 TOP PAPERS
 "
 
 IFS=$'\n'
@@ -61,22 +75,43 @@ for line in $TOP_PAPERS; do
   SCORE=$(echo "$line" | cut -d'|' -f1)
   TITLE=$(echo "$line" | cut -d'|' -f2)
   URL=$(echo "$line" | cut -d'|' -f3)
-  EXPLANATION=$(echo "$line" | cut -d'|' -f4 | head -c 100)
+  EXPLANATION=$(echo "$line" | cut -d'|' -f4 | head -c 120)
+
+  # Escape HTML special characters
+  TITLE=$(html_escape "$TITLE")
+  EXPLANATION=$(html_escape "$EXPLANATION")
+
+  # Add score emoji
+  if [[ "$SCORE" -ge 9 ]]; then
+    SCORE_EMOJI="🔥"
+  elif [[ "$SCORE" -ge 8 ]]; then
+    SCORE_EMOJI="⭐"
+  else
+    SCORE_EMOJI="📌"
+  fi
+
   MSG="${MSG}
-• <b>[${SCORE}]</b> <a href=\"${URL}\">${TITLE}</a>
-  ${EXPLANATION}..."
+${SCORE_EMOJI} ${SCORE}/10 — <a href=\"${URL}\">${TITLE}</a>
+   ${EXPLANATION}...
+
+"
 done
 
-MSG="${MSG}
-
+MSG="${MSG}━━━━━━━━━━━━━━━━━━━━
 📄 Full digest in your vault"
 
 # Send message
-curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
   -d chat_id="${CHAT_ID}" \
-  -d text="${MSG}" \
+  --data-urlencode text="${MSG}" \
   -d parse_mode="HTML" \
-  -d disable_web_page_preview="true" \
-  > /dev/null 2>&1
+  -d disable_web_page_preview="true" 2>&1)
 
-echo "Telegram notification sent (${HIGH} high-scoring papers)"
+# Check response
+if echo "$RESPONSE" | grep -q '"ok":true'; then
+  echo "✅ Telegram notification sent (${HIGH} high-scoring papers)"
+else
+  echo "❌ Failed to send Telegram notification"
+  echo "$RESPONSE"
+  exit 1
+fi
