@@ -21,13 +21,15 @@ export function generateDigest(
   options?: { range?: string; threshold?: number }
 ): string {
   const threshold = options?.threshold ?? 7;
+  // Include unscored papers when threshold is very low (testing/dry-run)
+  const includeUnscored = threshold <= 1;
 
   let papers: PaperRow[];
   if (options?.range) {
     const [startDate, endDate] = options.range.split(":");
-    papers = queryPapersByDateRange(db, startDate, endDate, threshold);
+    papers = queryPapersByDateRange(db, startDate, endDate, threshold, includeUnscored);
   } else {
-    papers = queryPapersByDate(db, date, threshold);
+    papers = queryPapersByDate(db, date, threshold, includeUnscored);
   }
 
   // Group by score band
