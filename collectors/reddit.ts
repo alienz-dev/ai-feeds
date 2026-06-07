@@ -28,8 +28,8 @@ export interface RedditConfig {
   sort: string;
   limit: number;
   timeout_seconds: number;
-  retries: number;
   delay_seconds: number;
+  cdp_endpoint: string;
 }
 
 const DEFAULTS: RedditConfig = {
@@ -38,8 +38,8 @@ const DEFAULTS: RedditConfig = {
   sort: "hot",
   limit: 25,
   timeout_seconds: 30,
-  retries: 3,
   delay_seconds: 1.0,
+  cdp_endpoint: "http://localhost:9222",
 };
 
 /**
@@ -57,8 +57,8 @@ export function loadConfig(rawConfig: unknown): RedditConfig {
     sort: raw.sort ?? DEFAULTS.sort,
     limit: raw.limit ?? DEFAULTS.limit,
     timeout_seconds: raw.timeout_seconds ?? DEFAULTS.timeout_seconds,
-    retries: raw.retries ?? DEFAULTS.retries,
     delay_seconds: raw.delay_seconds ?? DEFAULTS.delay_seconds,
+    cdp_endpoint: raw.cdp_endpoint ?? DEFAULTS.cdp_endpoint,
   };
 }
 
@@ -93,7 +93,7 @@ export async function fetchReddit(
     new RedditClient({
       delaySeconds: config.delay_seconds,
       timeoutSeconds: config.timeout_seconds,
-      retries: config.retries,
+      cdpEndpoint: config.cdp_endpoint,
     });
 
   try {

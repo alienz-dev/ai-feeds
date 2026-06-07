@@ -26,8 +26,8 @@ interface RedditConfig {
   sort: string;
   limit: number;
   timeout_seconds: number;
-  retries: number;
   delay_seconds: number;
+  cdp_endpoint: string;
 }
 
 interface RedditResult {
@@ -89,8 +89,8 @@ const DEFAULT_REDDIT_CONFIG: RedditConfig = {
   sort: "hot",
   limit: 25,
   timeout_seconds: 30,
-  retries: 3,
   delay_seconds: 1.0,
+  cdp_endpoint: "http://localhost:9222",
 };
 
 // ---------------------------------------------------------------------------
@@ -249,8 +249,8 @@ describe("Config loading with defaults", () => {
     expect(config.sort).toBe("hot");
     expect(config.limit).toBe(25);
     expect(config.timeout_seconds).toBe(30);
-    expect(config.retries).toBe(3);
     expect(config.delay_seconds).toBe(1.0);
+    expect(config.cdp_endpoint).toBe("http://localhost:9222");
   });
 
   it("uses defaults for missing keys only (preserves provided keys)", async () => {
@@ -273,8 +273,8 @@ describe("Config loading with defaults", () => {
     // These should use defaults
     expect(config.sort).toBe("hot");
     expect(config.timeout_seconds).toBe(30);
-    expect(config.retries).toBe(3);
     expect(config.delay_seconds).toBe(1.0);
+    expect(config.cdp_endpoint).toBe("http://localhost:9222");
   });
 
   it("flat config keys are supported (not just nested sources.reddit)", async () => {
@@ -523,12 +523,11 @@ describe("RedditClient instantiation", () => {
     const client = new RedditClient({
       delaySeconds: 1,
       timeoutSeconds: 30,
-      retries: 3,
+      cdpEndpoint: "http://localhost:9222",
     });
 
     expect(client).toBeDefined();
     expect(typeof client.fetchMultipleSubreddits).toBe("function");
-    expect(typeof client.fetchSubreddit).toBe("function");
   });
 
   it("RedditClient constructor accepts all config parameters", async () => {
@@ -537,7 +536,7 @@ describe("RedditClient instantiation", () => {
     expect(() => new RedditClient({
       delaySeconds: 1.0,
       timeoutSeconds: 30,
-      retries: 3,
+      cdpEndpoint: "http://localhost:9222",
     })).not.toThrow();
   });
 });
