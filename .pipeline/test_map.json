@@ -1,0 +1,6 @@
+{
+  "spec": "specs/SPEC-ARXIV.md",
+  "visible": ["tests/arxiv.test.ts"],
+  "hidden": [],
+  "all_red": true
+}

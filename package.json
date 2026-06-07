@@ -1,0 +1,21 @@
+{
+  "name": "ai-feeds",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Personal AI industry intelligence system",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "node --max-old-space-size=4096 node_modules/.bin/tsc --noEmit --incremental"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

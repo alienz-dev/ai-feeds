@@ -9,7 +9,11 @@ sources:
       - cs.CL
       - cs.LG
       - stat.ML
-    max_results: 50
+    max_results: 150
+    delay_seconds: 3.0
+    days_back: 2
+    timeout_seconds: 30
+    retries: 3
 
   huggingface:
     enabled: true

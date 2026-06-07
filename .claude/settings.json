@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./scaffold.sh *)",
+      "Bash(./setup.sh *)",
+      "Bash(bash phases/review/gates/*.sh *)",
+      "Bash(bash phases/review/gates/__tests__/*.sh *)"
+    ]
+  }
+}

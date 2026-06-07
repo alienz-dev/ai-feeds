@@ -86,6 +86,38 @@ This project implements a learn-by-doing framework (see `research/upskilling-sys
 - Use the Claude Code researcher agent for web research tasks
 - Learning issues go in `issues/` directory with the template from `research/upskilling-system.md`
 
+## Workflow (SDD — Spec-Driven Development)
+
+Features are built through a 3-phase lifecycle. **Do not skip phases.**
+
+### Phase 1: Design (interactive — user makes decisions)
+```
+/grill <topic>       → Design interview (Q&A, explores design space)
+/ba-validate <spec>  → Validate spec quality (structural + semantic)
+/approve <spec>      → Approve spec for implementation
+```
+
+### Phase 2: Implement (automatic — walk away)
+```
+/sdd <feature>       → Full pipeline: plan → test → code → review → retro
+```
+
+### Phase 3: Review (human — evaluate results)
+- Play with the feature, file issues if changes needed
+- Run `/sdd <feature>` again for fixes
+- Run `/grill` again if design needs changing
+
+### Available Skills
+| Skill | When to use |
+|-------|-------------|
+| `/grill` | Start a new feature — design interview |
+| `/ba-validate` | Check spec quality before approval |
+| `/approve` | Approve spec for implementation |
+| `/sdd` | Run the full implementation pipeline |
+| `/trio` | Run just the sprint phase (re-run implementation) |
+| `/spec-align` | Check spec vs code alignment |
+| `/researcher` | Deep research with parallel explorers |
+
 ## Reference Projects
 
 See `research/landscape-report.md` for the full landscape. Key projects to study:
