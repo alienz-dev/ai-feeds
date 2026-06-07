@@ -88,13 +88,17 @@ export class HnClient {
 
   /**
    * Search HN Algolia API for stories matching a query.
-   * Returns up to `hitsPerPage` results.
+   * Returns up to `hitsPerPage` results, filtered to stories created after `sinceTimestamp` (epoch seconds).
    */
   async searchStories(
     query: string,
-    hitsPerPage: number
+    hitsPerPage: number,
+    sinceTimestamp?: number
   ): Promise<Paper[]> {
-    const url = `${HN_ALGOLIA_API}?query=${encodeURIComponent(query)}&tags=story&hitsPerPage=${hitsPerPage}`;
+    let url = `${HN_ALGOLIA_API}?query=${encodeURIComponent(query)}&tags=story&hitsPerPage=${hitsPerPage}`;
+    if (sinceTimestamp) {
+      url += `&numericFilters=created_at_i>${sinceTimestamp}`;
+    }
     const data = await this.fetchWithRetry<{ hits: RawHnHit[] }>(url);
     const hits = data.hits ?? [];
 

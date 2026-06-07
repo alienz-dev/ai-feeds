@@ -322,12 +322,25 @@ async function main(): Promise<void> {
 
   setupLogging(values.verbose ? "debug" : "info");
 
-  if (!values.db) {
-    console.error("Error: --db is required. Provide the path to the SQLite database.");
-    process.exit(1);
+  let dbPath: string;
+  if (values.db) {
+    dbPath = values.db as string;
+  } else {
+    // Default from config.yaml
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    const configPath = path.join(__dirname, "..", "config.yaml");
+    try {
+      const raw = fs.readFileSync(configPath, "utf-8");
+      const parsed = yaml.parse(raw);
+      dbPath = parsed?.database?.path;
+    } catch {
+      // ignore
+    }
+    if (!dbPath) {
+      console.error("Error: --db is required (no database.path in config.yaml).");
+      process.exit(1);
+    }
   }
-
-  const dbPath = values.db as string;
   if (!fs.existsSync(dbPath)) {
     console.error(`Error: Database not found: ${dbPath}`);
     process.exit(1);

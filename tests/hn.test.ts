@@ -121,11 +121,11 @@ describe("Normal fetch", () => {
       client: mockClient as unknown as InstanceType<(typeof import("../collectors/hn-client.js"))["HnClient"]>,
     });
 
-    // searchStories should be called once per query
+    // searchStories should be called once per query (with sinceTimestamp)
     expect(mockClient.searchStories).toHaveBeenCalledTimes(3);
-    expect(mockClient.searchStories).toHaveBeenCalledWith("AI", 30);
-    expect(mockClient.searchStories).toHaveBeenCalledWith("LLM", 30);
-    expect(mockClient.searchStories).toHaveBeenCalledWith("machine learning", 30);
+    expect(mockClient.searchStories).toHaveBeenCalledWith("AI", 30, expect.any(Number));
+    expect(mockClient.searchStories).toHaveBeenCalledWith("LLM", 30, expect.any(Number));
+    expect(mockClient.searchStories).toHaveBeenCalledWith("machine learning", 30, expect.any(Number));
   });
 
   it("queries_searched contains the configured queries", async () => {

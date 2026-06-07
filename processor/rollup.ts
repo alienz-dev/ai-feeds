@@ -9,6 +9,10 @@ import { openDatabase, queryPapersByDateRange } from "../db/database.js";
 import type { PaperRow } from "../db/types.js";
 import { log, setupLogging } from "../collectors/common.js";
 import type { Database } from "better-sqlite3";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import yaml from "yaml";
 
 // ---------------------------------------------------------------------------
 // ISO week helpers
@@ -315,9 +319,21 @@ async function main(): Promise<void> {
   }
 
   if (!dbPath) {
-    console.error("Error: --db is required");
-    printUsage();
-    process.exit(1);
+    // Default from config.yaml
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    const configPath = path.join(__dirname, "..", "config.yaml");
+    try {
+      const raw = fs.readFileSync(configPath, "utf-8");
+      const parsed = yaml.parse(raw);
+      dbPath = parsed?.database?.path;
+    } catch {
+      // ignore
+    }
+    if (!dbPath) {
+      console.error("Error: --db is required (no database.path in config.yaml)");
+      printUsage();
+      process.exit(1);
+    }
   }
 
   setupLogging(verbose ? "debug" : "info");

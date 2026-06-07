@@ -6,7 +6,7 @@
  */
 
 import { RedditClient } from "./reddit-client.js";
-import { log, setupLogging } from "./common.js";
+import { log, setupLogging, dedupPapers } from "./common.js";
 import type { Paper } from "./common.js";
 import { parseArgs } from "node:util";
 import fs from "node:fs";
@@ -60,23 +60,6 @@ export function loadConfig(rawConfig: unknown): RedditConfig {
     retries: raw.retries ?? DEFAULTS.retries,
     delay_seconds: raw.delay_seconds ?? DEFAULTS.delay_seconds,
   };
-}
-
-/**
- * Deduplicate papers by Reddit post ID.
- */
-function dedupPapers(papers: Paper[]): Paper[] {
-  const seen = new Set<string>();
-  const result: Paper[] = [];
-
-  for (const paper of papers) {
-    if (!seen.has(paper.id)) {
-      seen.add(paper.id);
-      result.push(paper);
-    }
-  }
-
-  return result;
 }
 
 export interface FetchOptions {

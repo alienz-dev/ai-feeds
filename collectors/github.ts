@@ -6,7 +6,7 @@
  */
 
 import { GithubClient } from "./github-client.js";
-import { log, setupLogging } from "./common.js";
+import { log, setupLogging, dedupPapers } from "./common.js";
 import type { Paper } from "./common.js";
 import { parseArgs } from "node:util";
 import fs from "node:fs";
@@ -63,23 +63,6 @@ export function loadConfig(rawConfig: unknown): GithubConfig {
     timeout_seconds: raw.timeout_seconds ?? DEFAULTS.timeout_seconds,
     retries: raw.retries ?? DEFAULTS.retries,
   };
-}
-
-/**
- * Deduplicate papers by repo ID.
- */
-function dedupPapers(papers: Paper[]): Paper[] {
-  const byId = new Map<string, Paper>();
-
-  for (const paper of papers) {
-    const existing = byId.get(paper.id);
-    if (!existing) {
-      byId.set(paper.id, paper);
-    }
-    // Keep existing on duplicate ID (first seen wins)
-  }
-
-  return Array.from(byId.values());
 }
 
 export interface FetchOptions {

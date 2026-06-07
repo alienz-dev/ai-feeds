@@ -6,7 +6,7 @@
  */
 
 import { HnClient } from "./hn-client.js";
-import { log, setupLogging } from "./common.js";
+import { log, setupLogging, dedupPapers } from "./common.js";
 import type { Paper } from "./common.js";
 import { parseArgs } from "node:util";
 import fs from "node:fs";
@@ -31,6 +31,7 @@ export interface HnConfig {
   max_stories: number;
   timeout_seconds: number;
   retries: number;
+  days_back: number;
 }
 
 const DEFAULTS: HnConfig = {
@@ -39,6 +40,7 @@ const DEFAULTS: HnConfig = {
   max_stories: 30,
   timeout_seconds: 30,
   retries: 3,
+  days_back: 2,
 };
 
 /**
@@ -57,25 +59,10 @@ export function loadConfig(rawConfig: unknown): HnConfig {
     max_stories: raw.max_stories ?? DEFAULTS.max_stories,
     timeout_seconds: raw.timeout_seconds ?? DEFAULTS.timeout_seconds,
     retries: raw.retries ?? DEFAULTS.retries,
+    days_back: raw.days_back ?? DEFAULTS.days_back,
   };
 }
 
-/**
- * Deduplicate papers by ID. Keeps the first occurrence.
- */
-function dedupPapers(papers: Paper[]): Paper[] {
-  const seen = new Set<string>();
-  const result: Paper[] = [];
-
-  for (const paper of papers) {
-    if (!seen.has(paper.id)) {
-      seen.add(paper.id);
-      result.push(paper);
-    }
-  }
-
-  return result;
-}
 
 export interface FetchOptions {
   client?: HnClient;
@@ -110,10 +97,13 @@ export async function fetchHn(
       retries: config.retries,
     });
 
+  // Compute cutoff timestamp for date filtering
+  const sinceTimestamp = Math.floor(Date.now() / 1000) - config.days_back * 86400;
+
   // Fetch stories for each query
   for (const query of config.queries) {
     try {
-      const results = await client.searchStories(query, config.max_stories);
+      const results = await client.searchStories(query, config.max_stories, sinceTimestamp);
       papers.push(...results);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);

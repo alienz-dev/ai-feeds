@@ -6,7 +6,7 @@
  */
 
 import { DevtoClient } from "./devto-client.js";
-import { log, setupLogging } from "./common.js";
+import { log, setupLogging, dedupPapers } from "./common.js";
 import type { Paper } from "./common.js";
 import { parseArgs } from "node:util";
 import fs from "node:fs";
@@ -63,23 +63,6 @@ export function loadConfig(rawConfig: unknown): DevtoConfig {
     retries: raw.retries ?? DEFAULTS.retries,
     delay_seconds: raw.delay_seconds ?? DEFAULTS.delay_seconds,
   };
-}
-
-/**
- * Deduplicate articles by ID. Keeps the first occurrence.
- */
-function dedupPapers(papers: Paper[]): Paper[] {
-  const seen = new Set<string>();
-  const result: Paper[] = [];
-
-  for (const paper of papers) {
-    if (!seen.has(paper.id)) {
-      seen.add(paper.id);
-      result.push(paper);
-    }
-  }
-
-  return result;
 }
 
 export interface FetchOptions {

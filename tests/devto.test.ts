@@ -195,9 +195,9 @@ describe("AC-3: Deduplication by ID", () => {
     expect(result.papers[0].title).toBe("Original Title");
   });
 
-  it("does not dedup articles with different IDs", async () => {
-    const paper1 = makeArticle({ id: "11111" });
-    const paper2 = makeArticle({ id: "22222" });
+  it("does not dedup articles with different IDs and titles", async () => {
+    const paper1 = makeArticle({ id: "11111", title: "Building AI Agents" });
+    const paper2 = makeArticle({ id: "22222", title: "RAG Patterns for Production" });
 
     const mockClient = {
       fetchArticles: vi.fn().mockResolvedValue([paper1, paper2]),

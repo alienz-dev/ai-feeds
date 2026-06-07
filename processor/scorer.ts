@@ -252,26 +252,10 @@ function loadDefaultConfig(): {
   }
 }
 
+import { dedupPapers as sharedDedupPapers } from "../collectors/common.js";
+
 function deduplicatePapers(papers: Paper[]): Paper[] {
-  const seen = new Set<string>();
-  const result: Paper[] = [];
-
-  for (const paper of papers) {
-    // Dedup by ID first
-    if (seen.has(paper.id)) {
-      continue;
-    }
-    // Dedup by title (cross-source same paper with different IDs)
-    const titleKey = `title:${paper.title.toLowerCase().trim()}`;
-    if (seen.has(titleKey)) {
-      continue;
-    }
-    seen.add(paper.id);
-    seen.add(titleKey);
-    result.push(paper);
-  }
-
-  return result;
+  return sharedDedupPapers(papers);
 }
 
 // ---------------------------------------------------------------------------

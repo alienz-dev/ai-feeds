@@ -196,9 +196,9 @@ describe("AC-3: Deduplication by repo ID", () => {
     expect(result.papers[0].title).toBe("first");
   });
 
-  it("does not dedup repos with different IDs", async () => {
-    const repo1 = makePaper({ id: "12345" });
-    const repo2 = makePaper({ id: "67890" });
+  it("does not dedup repos with different IDs and titles", async () => {
+    const repo1 = makePaper({ id: "12345", title: "owner/awesome-ml-repo" });
+    const repo2 = makePaper({ id: "67890", title: "org/different-toolkit" });
 
     const mockClient = {
       fetchRepos: vi.fn().mockResolvedValue([repo1, repo2]),

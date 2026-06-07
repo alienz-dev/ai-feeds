@@ -69,15 +69,32 @@ export function sleep(seconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
 
-/** Deduplicate papers by ID, keeping the first occurrence. */
+/**
+ * Extract a fuzzy title key: first 5 words, lowercased, stripped of non-alphanum.
+ * Catches variants like "LlamaStash: Introduction" vs "LlamaStash Benchmark Results".
+ */
+export function fuzzyTitleKey(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 5)
+    .join(" ");
+}
+
+/** Deduplicate papers by ID and fuzzy title match, keeping the first occurrence. */
 export function dedupPapers(papers: Paper[]): Paper[] {
-  const seen = new Set<string>();
+  const seenIds = new Set<string>();
+  const seenTitles = new Set<string>();
   const result: Paper[] = [];
   for (const paper of papers) {
-    if (!seen.has(paper.id)) {
-      seen.add(paper.id);
-      result.push(paper);
-    }
+    if (seenIds.has(paper.id)) continue;
+    const titleKey = fuzzyTitleKey(paper.title);
+    if (titleKey && seenTitles.has(titleKey)) continue;
+    seenIds.add(paper.id);
+    if (titleKey) seenTitles.add(titleKey);
+    result.push(paper);
   }
   return result;
 }

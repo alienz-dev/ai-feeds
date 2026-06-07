@@ -35,8 +35,8 @@ Scoring Rubric (1-10):
 - 1-2: Irrelevant — no connection to any interest area
 - 3-4: Tangential — mentions a related topic but not directly relevant
 - 5-6: Related — addresses one interest area but not a primary focus
-- 7-8: Relevant — directly addresses one or more interest areas
-- 9-10: Highly relevant — central to interest areas, novel contribution
+- 7-8: Relevant — directly addresses one or more interest areas, with specific technical content
+- 9-10: Highly relevant — central to interest areas, novel technical contribution with methods/benchmarks/code
 
 Papers to score:
 ${paperEntries}
@@ -50,6 +50,10 @@ IMPORTANT SCORING INSTRUCTIONS:
 - When in doubt, score lower rather than higher
 - Do not infer details not in the abstract — if the abstract is vague, score accordingly
 - Base your score only on what is explicitly stated in the abstract
+- Items must contain specific technical content (methods, benchmarks, architecture details, code, empirical results) to score 7+. Generic mentions of a topic area are not enough.
+- Penalize items that are product homepages, marketing pages, press releases, or announcements with no technical substance. Cap such items at 3.
+- If the abstract describes a product/brand rather than a method, technique, or empirical result, score 1-3.
+- Old or well-known content (e.g., announcements from years ago, established products) should score 1-3 regardless of keyword overlap.
 
 Respond with a JSON array: [{"index": 0, "score": N, "explanation": "..."}]
 No other text, just the JSON array.`;
