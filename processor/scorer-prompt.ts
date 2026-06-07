@@ -120,6 +120,10 @@ function extractJsonArray(response: string): ScoredItem[] {
     if (Array.isArray(parsed)) {
       return parsed;
     }
+    // Handle single object response (LLM returned object instead of array)
+    if (parsed && typeof parsed === 'object' && 'index' in parsed && 'score' in parsed) {
+      return [parsed];
+    }
   } catch {
     // not direct JSON
   }

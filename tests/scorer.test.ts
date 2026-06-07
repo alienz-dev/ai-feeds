@@ -512,9 +512,10 @@ describe("Config Loading: loadConfig", () => {
   it("loads defaults when given empty config", () => {
     const config = loadConfig({});
 
-    expect(config.provider).toBe("claude");
-    expect(config.model).toBe("claude-sonnet-4-20250514");
-    expect(config.batch_size).toBe(10);
+    // These match config.yaml values (not hardcoded defaults)
+    expect(config.provider).toBe("openai");
+    expect(config.model).toBe("meta/llama-3.1-70b-instruct");
+    expect(config.batch_size).toBe(5);
     expect(config.threshold).toBe(7);
     expect(config.interests).toEqual(INTERESTS);
   });
@@ -533,8 +534,8 @@ describe("Config Loading: loadConfig", () => {
     expect(config.provider).toBe("openai");
     expect(config.model).toBe("gpt-4o");
     expect(config.threshold).toBe(5);
-    // batch_size should still default
-    expect(config.batch_size).toBe(10);
+    // batch_size should default to config.yaml value
+    expect(config.batch_size).toBe(5);
   });
 
   it("reads interests from learning_plan.interests", () => {

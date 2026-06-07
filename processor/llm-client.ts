@@ -69,11 +69,12 @@ async function makeRequest(
 ): Promise<Response> {
   switch (config.provider) {
     case "claude": {
-      const claudeKey = config.apiKey || process.env.ANTHROPIC_API_KEY || "";
+      const claudeKey = config.apiKey || process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN || "";
       if (!claudeKey) {
         throw new Error("ANTHROPIC_API_KEY not set. Export it or pass via config.");
       }
-      return fetch("https://api.anthropic.com/v1/messages", {
+      const anthropicBase = process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com";
+      return fetch(`${anthropicBase}/v1/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,9 +90,10 @@ async function makeRequest(
     }
 
     case "openai": {
-      const openaiKey = config.apiKey || process.env.OPENAI_API_KEY || "";
-      if (!openaiKey) throw new Error("OPENAI_API_KEY not set. Export it or pass --api-key.");
-      return fetch("https://api.openai.com/v1/chat/completions", {
+      const openaiKey = config.apiKey || process.env.OPENAI_API_KEY || process.env.OPENROUTER_API_KEY || "";
+      if (!openaiKey) throw new Error("OPENAI_API_KEY or OPENROUTER_API_KEY not set.");
+      const baseUrl = process.env.OPENAI_BASE_URL || process.env.OPENROUTER_BASE_URL || "https://api.openai.com";
+      return fetch(`${baseUrl}/v1/chat/completions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
