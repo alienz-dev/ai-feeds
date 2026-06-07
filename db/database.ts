@@ -247,14 +247,18 @@ export function queryPapersByDateRange(
   db: Database,
   startDate: string,
   endDate: string,
-  threshold: number
+  threshold: number,
+  includeUnscored: boolean = false
 ): PaperRow[] {
+  const scoreFilter = includeUnscored
+    ? `AND (relevance_score >= ? OR relevance_score IS NULL)`
+    : `AND relevance_score >= ?`;
   return db
     .prepare(
       `SELECT * FROM papers
        WHERE date(first_seen_at) >= ?
          AND date(first_seen_at) <= ?
-         AND relevance_score >= ?`
+         ${scoreFilter}`
     )
     .all(startDate, endDate, threshold) as PaperRow[];
 }

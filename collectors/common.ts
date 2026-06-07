@@ -63,3 +63,26 @@ export const log = {
     }
   },
 };
+
+/** Sleep for the given number of seconds. */
+export function sleep(seconds: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
+
+/** Deduplicate papers by ID, keeping the first occurrence. */
+export function dedupPapers(papers: Paper[]): Paper[] {
+  const seen = new Set<string>();
+  const result: Paper[] = [];
+  for (const paper of papers) {
+    if (!seen.has(paper.id)) {
+      seen.add(paper.id);
+      result.push(paper);
+    }
+  }
+  return result;
+}
+
+/** Normalize whitespace: collapse multiple spaces, trim. */
+export function normalizeWhitespace(s: string): string {
+  return s.replace(/\s+/g, " ").trim();
+}

@@ -30,6 +30,8 @@ sources:
       - "LLM"
       - "machine learning"
     max_stories: 30
+    timeout_seconds: 30
+    retries: 3
 
   reddit:
     enabled: true
@@ -39,6 +41,9 @@ sources:
       - artificial
     sort: hot
     limit: 25
+    timeout_seconds: 30
+    retries: 3
+    delay_seconds: 1.0
 
   github_trending:
     enabled: true
@@ -46,6 +51,10 @@ sources:
       - python
       - typescript
     since: daily
+    timeout_seconds: 30
+    retries: 3
+    delay_seconds: 2.0
+    max_results: 30
 
   producthunt:
     enabled: false  # Requires OAuth2
@@ -56,6 +65,10 @@ sources:
     enabled: true
     tag: ai
     top: 7
+    timeout_seconds: 30
+    retries: 3
+    delay_seconds: 1.0
+    limit: 30
 
 # Processing
 processor:
