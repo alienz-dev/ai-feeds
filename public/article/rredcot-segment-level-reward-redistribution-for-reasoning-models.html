@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RREDCoT: Segment-Level Reward Redistribution for Reasoning Models — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/rredcot-segment-level-reward-redistribution-for-reasoning-models.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>RREDCoT: Segment-Level Reward Redistribution for Reasoning Models</h1>
+
+    <div class="meta">
+      <span class="score-badge score-7">7/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">Directly addresses fine-tuning and LLM integration through the proposal of RREDCoT, a method for reward redistribution in reasoning language models. The paper also presents empirical results and analysis of the method.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Recent advancements in reasoning language models have been driven by Reinforcement Learning (RL) fine-tuning. Most often, these rely on the Group Relative Policy Optimization (GRPO) algorithm or modifications thereof to steer the models to produce Chain-of-Thought (CoT) traces. The final answer can only be verified, and the reward assigned, after the CoT trace is complete, making it a delayed reward problem. GRPO and its modifications correspond to Monte Carlo methods in standard RL, which are known to suffer from high variance. A possible solution to this problem is the redistribution of rewards through credit assignment, where segments of the CoT trace that are important for arriving at the desirable solution are emphasized by assigning a higher reward. While Monte Carlo sampling can be used to provide an unbiased estimate of intermediate state values, its computational overhead makes it unsuitable for train-time credit assignment in long contexts at high granularity. We introduce RREDCoT (Reward REDistribution for Chain of Thoughts), which utilizes the model itself to approximate the optimal reward redistribution without additional generation. We investigate the advantages of our method compared to MC sampling and several attribution methods. We further analyze several aspects relevant to the construction of the redistribution such as segmentation of CoT traces and state value estimation.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06475v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06475v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Mykyta Ielanskyi, Kajetan Schweighofer, Lukas Aichberger, Sepp Hochreiter</p>
+      <p><strong>Categories:</strong> cs.LG, cs.AI</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-rredcot-segment-level-reward-redistribution-for-reasoning-models&content=---%0Atitle%3A%20%22RREDCoT%3A%20Segment-Level%20Reward%20Redistribution%20for%20Reasoning%20Models%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06475v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06475v1%0Ascore%3A%207%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Mykyta%20Ielanskyi%22%2C%20%22Kajetan%20Schweighofer%22%2C%20%22Lukas%20Aichberger%22%2C%20%22Sepp%20Hochreiter%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-LG%2C%20cs-AI%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20RREDCoT%3A%20Segment-Level%20Reward%20Redistribution%20for%20Reasoning%20Models%0A%0A%23%23%20Why%20This%20Matters%0ADirectly%20addresses%20fine-tuning%20and%20LLM%20integration%20through%20the%20proposal%20of%20RREDCoT%2C%20a%20method%20for%20reward%20redistribution%20in%20reasoning%20language%20models.%20The%20paper%20also%20presents%20empirical%20results%20and%20analysis%20of%20the%20method.%0A%0A%23%23%20Abstract%0ARecent%20advancements%20in%20reasoning%20language%20models%20have%20been%20driven%20by%20Reinforcement%20Learning%20(RL)%20fine-tuning.%20Most%20often%2C%20these%20rely%20on%20the%20Group%20Relative%20Policy%20Optimization%20(GRPO)%20algorithm%20or%20modifications%20thereof%20to%20steer%20the%20models%20to%20produce%20Chain-of-Thought%20(CoT)%20traces.%20The%20final%20answer%20can%20only%20be%20verified%2C%20and%20the%20reward%20assigned%2C%20after%20the%20CoT%20trace%20is%20complete%2C%20making%20it%20a%20delayed%20reward%20problem.%20GRPO%20and%20its%20modifications%20correspond%20to%20Monte%20Carlo%20methods%20in%20standard%20RL%2C%20which%20are%20known%20to%20suffer%20from%20high%20variance.%20A%20possible%20solution%20to%20this%20problem%20is%20the%20redistribution%20of%20rewards%20through%20credit%20assignment%2C%20where%20segments%20of%20the%20CoT%20trace%20that%20are%20important%20for%20arriving%20at%20the%20desirable%20solution%20are%20emphasized%20by%20assigning%20a%20higher%20reward.%20While%20Monte%20Carlo%20sampling%20can%20be%20used%20to%20provide%20an%20unbiased%20estimate%20of%20intermediate%20state%20values%2C%20its%20computational%20overhead%20makes%20it%20unsuitable%20for%20train-time%20credit%20assignment%20in%20long%20contexts%20at%20high%20granularity.%20We%20introduce%20RREDCoT%20(Reward%20REDistribution%20for%20Chain%20of%20Thoughts)%2C%20which%20utilizes%20the%20model%20itself%20to%20approximate%20the%20optimal%20reward%20redistribution%20without%20additional%20generation.%20We%20investigate%20the%20advantages%20of%20our%20method%20compared%20to%20MC%20sampling%20and%20several%20attribution%20methods.%20We%20further%20analyze%20several%20aspects%20relevant%20to%20the%20construction%20of%20the%20redistribution%20such%20as%20segmentation%20of%20CoT%20traces%20and%20state%20value%20estimation.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06475v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06475v1%0A-%20Score%3A%207%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-rredcot-segment-level-reward-redistribution-for-reasoning-models.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"RREDCoT: Segment-Level Reward Redistribution for Reasoning Models\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06475v1\npdf_url: https://arxiv.org/pdf/2606.06475v1\nscore: 7\ndate: 2026-06-07\nauthors: [\"Mykyta Ielanskyi\", \"Kajetan Schweighofer\", \"Lukas Aichberger\", \"Sepp Hochreiter\"]\ntags: [ai-signal, cs-LG, cs-AI]\nstatus: inbox\n---\n\n# RREDCoT: Segment-Level Reward Redistribution for Reasoning Models\n\n## Why This Matters\nDirectly addresses fine-tuning and LLM integration through the proposal of RREDCoT, a method for reward redistribution in reasoning language models. The paper also presents empirical results and analysis of the method.\n\n## Abstract\nRecent advancements in reasoning language models have been driven by Reinforcement Learning (RL) fine-tuning. Most often, these rely on the Group Relative Policy Optimization (GRPO) algorithm or modifications thereof to steer the models to produce Chain-of-Thought (CoT) traces. The final answer can only be verified, and the reward assigned, after the CoT trace is complete, making it a delayed reward problem. GRPO and its modifications correspond to Monte Carlo methods in standard RL, which are known to suffer from high variance. A possible solution to this problem is the redistribution of rewards through credit assignment, where segments of the CoT trace that are important for arriving at the desirable solution are emphasized by assigning a higher reward. While Monte Carlo sampling can be used to provide an unbiased estimate of intermediate state values, its computational overhead makes it unsuitable for train-time credit assignment in long contexts at high granularity. We introduce RREDCoT (Reward REDistribution for Chain of Thoughts), which utilizes the model itself to approximate the optimal reward redistribution without additional generation. We investigate the advantages of our method compared to MC sampling and several attribution methods. We further analyze several aspects relevant to the construction of the redistribution such as segmentation of CoT traces and state value estimation.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06475v1\n- PDF: https://arxiv.org/pdf/2606.06475v1\n- Score: 7/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

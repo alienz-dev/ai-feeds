@@ -88,6 +88,21 @@ processor:
 database:
   path: db/ai-feeds.sqlite
 
+# Telegram notifications
+telegram:
+  enabled: false
+  bot_token_cmd: "pass show telegram/agent-bot-token"  # command to retrieve token
+  chat_id: "YOUR_CHAT_ID"
+  notify_on: high_scoring  # "always" or "high_scoring" (only when score 8+ papers exist)
+
+# Static site
+site:
+  enabled: true
+  domain: signals.yourdomain.com  # Your custom domain
+  vault_path: ~/vault/inbox/signals  # Where to save notes via "Save to Vault" button
+  title: AI Signals
+  description: "Curated AI industry intelligence — papers, tools, and insights worth your time."
+
 # Output
 output:
   vault_path: ~/your-vault-path/signals  # Set to your Obsidian vault signals directory

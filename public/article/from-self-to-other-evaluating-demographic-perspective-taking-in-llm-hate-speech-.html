@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Self to Other: Evaluating Demographic Perspective-Taking in LLM Hate Speech Annotation — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/from-self-to-other-evaluating-demographic-perspective-taking-in-llm-hate-speech-.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>From Self to Other: Evaluating Demographic Perspective-Taking in LLM Hate Speech Annotation</h1>
+
+    <div class="meta">
+      <span class="score-badge score-8">8/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">Directly addresses LLM integration, with specific technical content on evaluating demographic perspective-taking in LLM hate speech annotation, including methods and results.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Hate speech detection is inherently subjective: people from different demographic groups perceive the same content very differently. Collecting enough annotations from multiple demographic groups is costly and difficult to scale. Persona-conditioned Large Language Models (models prompted to adopt a specific demographic identity) have been proposed as a way to simulate diverse perspectives at scale. But do they actually reflect how different groups disagree? We evaluate three aspects of human social judgement: (i) whether personas from different groups disagree in human-like ways (inter-group disagreement), (ii) whether they become more sensitive when content targets their own identity (in-group sensitivity), and (iii) whether they can accurately predict how another group would react (vicarious prediction). Our results show that no model consistently captures all three dimensions, and performance is highly model-dependent and does not emerge reliably from minimal identity prompts alone. However, vicarious prompting with Llama 3.1 yields the highest cross-group agreement in most demographic axes and provides the closest overall approximation to human disagreement patterns, indicating that this configuration may provide a more reliable setting for automatic annotation aligned with human judgements.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06266v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06266v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Paloma Piot, Javier Parapar</p>
+      <p><strong>Categories:</strong> cs.CL</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-from-self-to-other-evaluating-demographic-perspective-taking-in-llm-hate-speech-&content=---%0Atitle%3A%20%22From%20Self%20to%20Other%3A%20Evaluating%20Demographic%20Perspective-Taking%20in%20LLM%20Hate%20Speech%20Annotation%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06266v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06266v1%0Ascore%3A%208%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Paloma%20Piot%22%2C%20%22Javier%20Parapar%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-CL%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20From%20Self%20to%20Other%3A%20Evaluating%20Demographic%20Perspective-Taking%20in%20LLM%20Hate%20Speech%20Annotation%0A%0A%23%23%20Why%20This%20Matters%0ADirectly%20addresses%20LLM%20integration%2C%20with%20specific%20technical%20content%20on%20evaluating%20demographic%20perspective-taking%20in%20LLM%20hate%20speech%20annotation%2C%20including%20methods%20and%20results.%0A%0A%23%23%20Abstract%0AHate%20speech%20detection%20is%20inherently%20subjective%3A%20people%20from%20different%20demographic%20groups%20perceive%20the%20same%20content%20very%20differently.%20Collecting%20enough%20annotations%20from%20multiple%20demographic%20groups%20is%20costly%20and%20difficult%20to%20scale.%20Persona-conditioned%20Large%20Language%20Models%20(models%20prompted%20to%20adopt%20a%20specific%20demographic%20identity)%20have%20been%20proposed%20as%20a%20way%20to%20simulate%20diverse%20perspectives%20at%20scale.%20But%20do%20they%20actually%20reflect%20how%20different%20groups%20disagree%3F%20We%20evaluate%20three%20aspects%20of%20human%20social%20judgement%3A%20(i)%20whether%20personas%20from%20different%20groups%20disagree%20in%20human-like%20ways%20(inter-group%20disagreement)%2C%20(ii)%20whether%20they%20become%20more%20sensitive%20when%20content%20targets%20their%20own%20identity%20(in-group%20sensitivity)%2C%20and%20(iii)%20whether%20they%20can%20accurately%20predict%20how%20another%20group%20would%20react%20(vicarious%20prediction).%20Our%20results%20show%20that%20no%20model%20consistently%20captures%20all%20three%20dimensions%2C%20and%20performance%20is%20highly%20model-dependent%20and%20does%20not%20emerge%20reliably%20from%20minimal%20identity%20prompts%20alone.%20However%2C%20vicarious%20prompting%20with%20Llama%203.1%20yields%20the%20highest%20cross-group%20agreement%20in%20most%20demographic%20axes%20and%20provides%20the%20closest%20overall%20approximation%20to%20human%20disagreement%20patterns%2C%20indicating%20that%20this%20configuration%20may%20provide%20a%20more%20reliable%20setting%20for%20automatic%20annotation%20aligned%20with%20human%20judgements.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06266v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06266v1%0A-%20Score%3A%208%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-from-self-to-other-evaluating-demographic-perspective-taking-in-llm-hate-speech-.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"From Self to Other: Evaluating Demographic Perspective-Taking in LLM Hate Speech Annotation\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06266v1\npdf_url: https://arxiv.org/pdf/2606.06266v1\nscore: 8\ndate: 2026-06-07\nauthors: [\"Paloma Piot\", \"Javier Parapar\"]\ntags: [ai-signal, cs-CL]\nstatus: inbox\n---\n\n# From Self to Other: Evaluating Demographic Perspective-Taking in LLM Hate Speech Annotation\n\n## Why This Matters\nDirectly addresses LLM integration, with specific technical content on evaluating demographic perspective-taking in LLM hate speech annotation, including methods and results.\n\n## Abstract\nHate speech detection is inherently subjective: people from different demographic groups perceive the same content very differently. Collecting enough annotations from multiple demographic groups is costly and difficult to scale. Persona-conditioned Large Language Models (models prompted to adopt a specific demographic identity) have been proposed as a way to simulate diverse perspectives at scale. But do they actually reflect how different groups disagree? We evaluate three aspects of human social judgement: (i) whether personas from different groups disagree in human-like ways (inter-group disagreement), (ii) whether they become more sensitive when content targets their own identity (in-group sensitivity), and (iii) whether they can accurately predict how another group would react (vicarious prediction). Our results show that no model consistently captures all three dimensions, and performance is highly model-dependent and does not emerge reliably from minimal identity prompts alone. However, vicarious prompting with Llama 3.1 yields the highest cross-group agreement in most demographic axes and provides the closest overall approximation to human disagreement patterns, indicating that this configuration may provide a more reliable setting for automatic annotation aligned with human judgements.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06266v1\n- PDF: https://arxiv.org/pdf/2606.06266v1\n- Score: 8/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

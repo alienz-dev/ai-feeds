@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaffold, Not Vocabulary? A Controlled, Two-Tier, Pre-Registered Study of a Popperian Code-Generation Skill — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/scaffold-not-vocabulary-a-controlled-two-tier-pre-registered-study-of-a-popperia.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>Scaffold, Not Vocabulary? A Controlled, Two-Tier, Pre-Registered Study of a Popperian Code-Generation Skill</h1>
+
+    <div class="meta">
+      <span class="score-badge score-8">8/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">This paper is relevant to fine-tuning, LLM integration, and RAG. It discusses the effectiveness of a specific prompt skill in improving code generation and presents a controlled study with empirical results.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Large language models increasingly write, review, and judge code, and a fast-growing practice equips them with prompt &#039;skills&#039; that ask the model to reason like a scientist. A prominent example tells the model to act as a Popperian falsificationist, and such skills are reported to improve generated code. But these gains are almost always read off an LLM-as-a-judge, an instrument with documented positional, self-preference, and stylistic biases. We ask: if it appears to help, is the gain from the skill&#039;s Popperian content, or from the structure any scaffold imposes? We pre-register a two-tier ablation with three controls: a length-matched placebo, a labels-only scaffold that keeps the Popperian headers but strips the procedure, and an execution oracle (HumanEval+ unit tests), plus a vocabulary-halo sentinel and a same-model self-judge audit. On a frontier model (Claude Sonnet 4.6, N=163) all conditions sit near the benchmark ceiling and do not separate, so the pre-registered +5-point improvement is not supported (a ceiling-limited non-detection). On a small model (Qwen2.5-Coder-0.5B, N=164) structured arms lift best-of-eight correctness by 20-22 points, but the full skill shows no separable benefit over a labels-only scaffold (aggregate F@8=L@8 vs V@8=34.8%), and the placebo trails by only 2.4 points. A 0.5B self-judge applying the Popperian rubric does not beat random selection and concentrates 60% of its picks on one index. In the two settings tested, the skill&#039;s Popperian procedural content adds no separable execution-correctness benefit beyond a labels-only scaffold, so the gains track scaffold structure. We contribute a calibrated negative result and a reusable disambiguation protocol; the finding bounds an engineering claim about one prompt-skill family and is not an evaluation of Popperian methodology in general.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06454v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06454v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Mehmet Iscan</p>
+      <p><strong>Categories:</strong> cs.SE, cs.CL</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-scaffold-not-vocabulary-a-controlled-two-tier-pre-registered-study-of-a-popperia&content=---%0Atitle%3A%20%22Scaffold%2C%20Not%20Vocabulary%3F%20A%20Controlled%2C%20Two-Tier%2C%20Pre-Registered%20Study%20of%20a%20Popperian%20Code-Generation%20Skill%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06454v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06454v1%0Ascore%3A%208%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Mehmet%20Iscan%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-SE%2C%20cs-CL%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20Scaffold%2C%20Not%20Vocabulary%3F%20A%20Controlled%2C%20Two-Tier%2C%20Pre-Registered%20Study%20of%20a%20Popperian%20Code-Generation%20Skill%0A%0A%23%23%20Why%20This%20Matters%0AThis%20paper%20is%20relevant%20to%20fine-tuning%2C%20LLM%20integration%2C%20and%20RAG.%20It%20discusses%20the%20effectiveness%20of%20a%20specific%20prompt%20skill%20in%20improving%20code%20generation%20and%20presents%20a%20controlled%20study%20with%20empirical%20results.%0A%0A%23%23%20Abstract%0ALarge%20language%20models%20increasingly%20write%2C%20review%2C%20and%20judge%20code%2C%20and%20a%20fast-growing%20practice%20equips%20them%20with%20prompt%20'skills'%20that%20ask%20the%20model%20to%20reason%20like%20a%20scientist.%20A%20prominent%20example%20tells%20the%20model%20to%20act%20as%20a%20Popperian%20falsificationist%2C%20and%20such%20skills%20are%20reported%20to%20improve%20generated%20code.%20But%20these%20gains%20are%20almost%20always%20read%20off%20an%20LLM-as-a-judge%2C%20an%20instrument%20with%20documented%20positional%2C%20self-preference%2C%20and%20stylistic%20biases.%20We%20ask%3A%20if%20it%20appears%20to%20help%2C%20is%20the%20gain%20from%20the%20skill's%20Popperian%20content%2C%20or%20from%20the%20structure%20any%20scaffold%20imposes%3F%20We%20pre-register%20a%20two-tier%20ablation%20with%20three%20controls%3A%20a%20length-matched%20placebo%2C%20a%20labels-only%20scaffold%20that%20keeps%20the%20Popperian%20headers%20but%20strips%20the%20procedure%2C%20and%20an%20execution%20oracle%20(HumanEval%2B%20unit%20tests)%2C%20plus%20a%20vocabulary-halo%20sentinel%20and%20a%20same-model%20self-judge%20audit.%20On%20a%20frontier%20model%20(Claude%20Sonnet%204.6%2C%20N%3D163)%20all%20conditions%20sit%20near%20the%20benchmark%20ceiling%20and%20do%20not%20separate%2C%20so%20the%20pre-registered%20%2B5-point%20improvement%20is%20not%20supported%20(a%20ceiling-limited%20non-detection).%20On%20a%20small%20model%20(Qwen2.5-Coder-0.5B%2C%20N%3D164)%20structured%20arms%20lift%20best-of-eight%20correctness%20by%2020-22%20points%2C%20but%20the%20full%20skill%20shows%20no%20separable%20benefit%20over%20a%20labels-only%20scaffold%20(aggregate%20F%408%3DL%408%20vs%20V%408%3D34.8%25)%2C%20and%20the%20placebo%20trails%20by%20only%202.4%20points.%20A%200.5B%20self-judge%20applying%20the%20Popperian%20rubric%20does%20not%20beat%20random%20selection%20and%20concentrates%2060%25%20of%20its%20picks%20on%20one%20index.%20In%20the%20two%20settings%20tested%2C%20the%20skill's%20Popperian%20procedural%20content%20adds%20no%20separable%20execution-correctness%20benefit%20beyond%20a%20labels-only%20scaffold%2C%20so%20the%20gains%20track%20scaffold%20structure.%20We%20contribute%20a%20calibrated%20negative%20result%20and%20a%20reusable%20disambiguation%20protocol%3B%20the%20finding%20bounds%20an%20engineering%20claim%20about%20one%20prompt-skill%20family%20and%20is%20not%20an%20evaluation%20of%20Popperian%20methodology%20in%20general.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06454v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06454v1%0A-%20Score%3A%208%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-scaffold-not-vocabulary-a-controlled-two-tier-pre-registered-study-of-a-popperia.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"Scaffold, Not Vocabulary? A Controlled, Two-Tier, Pre-Registered Study of a Popperian Code-Generation Skill\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06454v1\npdf_url: https://arxiv.org/pdf/2606.06454v1\nscore: 8\ndate: 2026-06-07\nauthors: [\"Mehmet Iscan\"]\ntags: [ai-signal, cs-SE, cs-CL]\nstatus: inbox\n---\n\n# Scaffold, Not Vocabulary? A Controlled, Two-Tier, Pre-Registered Study of a Popperian Code-Generation Skill\n\n## Why This Matters\nThis paper is relevant to fine-tuning, LLM integration, and RAG. It discusses the effectiveness of a specific prompt skill in improving code generation and presents a controlled study with empirical results.\n\n## Abstract\nLarge language models increasingly write, review, and judge code, and a fast-growing practice equips them with prompt 'skills' that ask the model to reason like a scientist. A prominent example tells the model to act as a Popperian falsificationist, and such skills are reported to improve generated code. But these gains are almost always read off an LLM-as-a-judge, an instrument with documented positional, self-preference, and stylistic biases. We ask: if it appears to help, is the gain from the skill's Popperian content, or from the structure any scaffold imposes? We pre-register a two-tier ablation with three controls: a length-matched placebo, a labels-only scaffold that keeps the Popperian headers but strips the procedure, and an execution oracle (HumanEval+ unit tests), plus a vocabulary-halo sentinel and a same-model self-judge audit. On a frontier model (Claude Sonnet 4.6, N=163) all conditions sit near the benchmark ceiling and do not separate, so the pre-registered +5-point improvement is not supported (a ceiling-limited non-detection). On a small model (Qwen2.5-Coder-0.5B, N=164) structured arms lift best-of-eight correctness by 20-22 points, but the full skill shows no separable benefit over a labels-only scaffold (aggregate F@8=L@8 vs V@8=34.8%), and the placebo trails by only 2.4 points. A 0.5B self-judge applying the Popperian rubric does not beat random selection and concentrates 60% of its picks on one index. In the two settings tested, the skill's Popperian procedural content adds no separable execution-correctness benefit beyond a labels-only scaffold, so the gains track scaffold structure. We contribute a calibrated negative result and a reusable disambiguation protocol; the finding bounds an engineering claim about one prompt-skill family and is not an evaluation of Popperian methodology in general.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06454v1\n- PDF: https://arxiv.org/pdf/2606.06454v1\n- Score: 8/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

@@ -540,6 +540,7 @@ describe("AC-6: queryPapersByDate", () => {
   });
 
   it("returns papers for a given date above threshold", () => {
+    const today = new Date().toISOString().slice(0, 10);
     upsertPaper(db, makeScoredPaper({
       id: "qdate-1",
       title: "High Score Paper",
@@ -551,7 +552,7 @@ describe("AC-6: queryPapersByDate", () => {
       relevance_score: 3,
     }));
 
-    const results = queryPapersByDate(db, "2026-06-07", 7);
+    const results = queryPapersByDate(db, today, 7);
     expect(results.length).toBeGreaterThanOrEqual(1);
     // Only the high-score paper should be returned
     const highScore = results.find((r) => r.title === "High Score Paper");
@@ -820,18 +821,19 @@ describe("AC-4: Digest frontmatter", () => {
   });
 
   it("generates markdown with correct YAML frontmatter", () => {
+    const today = new Date().toISOString().slice(0, 10);
     upsertPaper(db, makeScoredPaper({
       id: "digest-1",
       title: "Digest Test Paper",
       relevance_score: 9,
     }));
 
-    const output = generateDigest(db, "2026-06-07", { threshold: 7 });
+    const output = generateDigest(db, today, { threshold: 7 });
 
     expect(output).toContain("---");
     expect(output).toContain("signal-source: papers");
     expect(output).toContain("created:");
-    expect(output).toContain("2026-06-07");
+    expect(output).toContain(today);
   });
 });
 
@@ -850,6 +852,7 @@ describe("AC-4: Digest threshold filtering", () => {
   });
 
   it("excludes papers below threshold", () => {
+    const today = new Date().toISOString().slice(0, 10);
     upsertPaper(db, makeScoredPaper({
       id: "thresh-high",
       title: "Above Threshold Paper",
@@ -861,7 +864,7 @@ describe("AC-4: Digest threshold filtering", () => {
       relevance_score: 3,
     }));
 
-    const output = generateDigest(db, "2026-06-07", { threshold: 7 });
+    const output = generateDigest(db, today, { threshold: 7 });
 
     expect(output).toContain("Above Threshold Paper");
     expect(output).not.toContain("Below Threshold Paper");
@@ -883,6 +886,7 @@ describe("AC-4: Digest score bands", () => {
   });
 
   it("groups papers by score band (High 8-10, Medium 7)", () => {
+    const today = new Date().toISOString().slice(0, 10);
     upsertPaper(db, makeScoredPaper({
       id: "band-high",
       title: "High Band Paper",
@@ -894,7 +898,7 @@ describe("AC-4: Digest score bands", () => {
       relevance_score: 7,
     }));
 
-    const output = generateDigest(db, "2026-06-07", { threshold: 7 });
+    const output = generateDigest(db, today, { threshold: 7 });
 
     // Should contain band headers
     expect(output).toMatch(/High|8-10/);
@@ -917,6 +921,7 @@ describe("AC-4: Digest includes score_explanation", () => {
   });
 
   it("includes score_explanation for each paper in digest", () => {
+    const today = new Date().toISOString().slice(0, 10);
     upsertPaper(db, makeScoredPaper({
       id: "expl-1",
       title: "Explanation Test",
@@ -924,7 +929,7 @@ describe("AC-4: Digest includes score_explanation", () => {
       score_explanation: "This paper is relevant because it covers transformer scaling.",
     }));
 
-    const output = generateDigest(db, "2026-06-07", { threshold: 7 });
+    const output = generateDigest(db, today, { threshold: 7 });
     expect(output).toContain("This paper is relevant because it covers transformer scaling.");
   });
 });

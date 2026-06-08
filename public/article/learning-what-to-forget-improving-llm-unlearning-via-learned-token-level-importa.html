@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning What to Forget: Improving LLM Unlearning via Learned Token-Level Importance — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/learning-what-to-forget-improving-llm-unlearning-via-learned-token-level-importa.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>Learning What to Forget: Improving LLM Unlearning via Learned Token-Level Importance</h1>
+
+    <div class="meta">
+      <span class="score-badge score-9">9/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">Highly relevant to LLM integration and fine-tuning, as it discusses machine unlearning and the proposed framework, Alternating Token-Weighted Unlearning (ATWU), which jointly learns token forget-specificity and model parameters during unlearning. The method achieves state-of-the-art forget-retain trade-offs and outperforms existing approaches.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Machine unlearning aims to remove targeted knowledge from a trained model while preserving its general capabilities. For autoregressive language models, not all tokens in a forget sample are equally relevant to forgetting. Existing approaches either ignore this heterogeneity or rely on auxiliary models, heuristics, or external annotations to estimate each token&#039;s relevance for forgetting. We instead characterize it through the interaction with the retain objective: a token is forget-specific to the extent that minimizing the forget loss on that token does not conflict with retain optimality. We formalize this perspective as a joint optimization problem over the model parameters and the token weights and show that, under a natural separation condition, the resulting objective recovers the oracle forget-specific token support. Motivated by this formulation, we introduce Alternating Token-Weighted Unlearning (ATWU), a lightweight framework that jointly learns token forget-specificity and model parameters during unlearning using a simple linear scorer over the hidden states, without external token level supervision. Across TOFU and RWKU, ATWU achieves state of the art forget-retain trade-offs, outperforming sample-level methods, probability-based token weighting heuristics, and auxiliary-model-based approaches. Moreover, the learned scores align substantially better with ground truth forget-specific spans, indicating that ATWU identifies semantically meaningful token level forgetting signals. Overall, our results suggest that retain conflict provides an effective criterion for identifying what language models should forget, enabling unsupervised learning of token level forget-specificity directly from model representations with minimal computational overhead.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06320v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06320v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Gizem Yüce, Giorgos Nikolaou, Nicolas Flammarion</p>
+      <p><strong>Categories:</strong> cs.LG, cs.AI, cs.CL</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-learning-what-to-forget-improving-llm-unlearning-via-learned-token-level-importa&content=---%0Atitle%3A%20%22Learning%20What%20to%20Forget%3A%20Improving%20LLM%20Unlearning%20via%20Learned%20Token-Level%20Importance%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06320v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06320v1%0Ascore%3A%209%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Gizem%20Y%C3%BCce%22%2C%20%22Giorgos%20Nikolaou%22%2C%20%22Nicolas%20Flammarion%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-LG%2C%20cs-AI%2C%20cs-CL%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20Learning%20What%20to%20Forget%3A%20Improving%20LLM%20Unlearning%20via%20Learned%20Token-Level%20Importance%0A%0A%23%23%20Why%20This%20Matters%0AHighly%20relevant%20to%20LLM%20integration%20and%20fine-tuning%2C%20as%20it%20discusses%20machine%20unlearning%20and%20the%20proposed%20framework%2C%20Alternating%20Token-Weighted%20Unlearning%20(ATWU)%2C%20which%20jointly%20learns%20token%20forget-specificity%20and%20model%20parameters%20during%20unlearning.%20The%20method%20achieves%20state-of-the-art%20forget-retain%20trade-offs%20and%20outperforms%20existing%20approaches.%0A%0A%23%23%20Abstract%0AMachine%20unlearning%20aims%20to%20remove%20targeted%20knowledge%20from%20a%20trained%20model%20while%20preserving%20its%20general%20capabilities.%20For%20autoregressive%20language%20models%2C%20not%20all%20tokens%20in%20a%20forget%20sample%20are%20equally%20relevant%20to%20forgetting.%20Existing%20approaches%20either%20ignore%20this%20heterogeneity%20or%20rely%20on%20auxiliary%20models%2C%20heuristics%2C%20or%20external%20annotations%20to%20estimate%20each%20token's%20relevance%20for%20forgetting.%20We%20instead%20characterize%20it%20through%20the%20interaction%20with%20the%20retain%20objective%3A%20a%20token%20is%20forget-specific%20to%20the%20extent%20that%20minimizing%20the%20forget%20loss%20on%20that%20token%20does%20not%20conflict%20with%20retain%20optimality.%20We%20formalize%20this%20perspective%20as%20a%20joint%20optimization%20problem%20over%20the%20model%20parameters%20and%20the%20token%20weights%20and%20show%20that%2C%20under%20a%20natural%20separation%20condition%2C%20the%20resulting%20objective%20recovers%20the%20oracle%20forget-specific%20token%20support.%20Motivated%20by%20this%20formulation%2C%20we%20introduce%20Alternating%20Token-Weighted%20Unlearning%20(ATWU)%2C%20a%20lightweight%20framework%20that%20jointly%20learns%20token%20forget-specificity%20and%20model%20parameters%20during%20unlearning%20using%20a%20simple%20linear%20scorer%20over%20the%20hidden%20states%2C%20without%20external%20token%20level%20supervision.%20Across%20TOFU%20and%20RWKU%2C%20ATWU%20achieves%20state%20of%20the%20art%20forget-retain%20trade-offs%2C%20outperforming%20sample-level%20methods%2C%20probability-based%20token%20weighting%20heuristics%2C%20and%20auxiliary-model-based%20approaches.%20Moreover%2C%20the%20learned%20scores%20align%20substantially%20better%20with%20ground%20truth%20forget-specific%20spans%2C%20indicating%20that%20ATWU%20identifies%20semantically%20meaningful%20token%20level%20forgetting%20signals.%20Overall%2C%20our%20results%20suggest%20that%20retain%20conflict%20provides%20an%20effective%20criterion%20for%20identifying%20what%20language%20models%20should%20forget%2C%20enabling%20unsupervised%20learning%20of%20token%20level%20forget-specificity%20directly%20from%20model%20representations%20with%20minimal%20computational%20overhead.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06320v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06320v1%0A-%20Score%3A%209%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-learning-what-to-forget-improving-llm-unlearning-via-learned-token-level-importa.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"Learning What to Forget: Improving LLM Unlearning via Learned Token-Level Importance\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06320v1\npdf_url: https://arxiv.org/pdf/2606.06320v1\nscore: 9\ndate: 2026-06-07\nauthors: [\"Gizem Yüce\", \"Giorgos Nikolaou\", \"Nicolas Flammarion\"]\ntags: [ai-signal, cs-LG, cs-AI, cs-CL]\nstatus: inbox\n---\n\n# Learning What to Forget: Improving LLM Unlearning via Learned Token-Level Importance\n\n## Why This Matters\nHighly relevant to LLM integration and fine-tuning, as it discusses machine unlearning and the proposed framework, Alternating Token-Weighted Unlearning (ATWU), which jointly learns token forget-specificity and model parameters during unlearning. The method achieves state-of-the-art forget-retain trade-offs and outperforms existing approaches.\n\n## Abstract\nMachine unlearning aims to remove targeted knowledge from a trained model while preserving its general capabilities. For autoregressive language models, not all tokens in a forget sample are equally relevant to forgetting. Existing approaches either ignore this heterogeneity or rely on auxiliary models, heuristics, or external annotations to estimate each token's relevance for forgetting. We instead characterize it through the interaction with the retain objective: a token is forget-specific to the extent that minimizing the forget loss on that token does not conflict with retain optimality. We formalize this perspective as a joint optimization problem over the model parameters and the token weights and show that, under a natural separation condition, the resulting objective recovers the oracle forget-specific token support. Motivated by this formulation, we introduce Alternating Token-Weighted Unlearning (ATWU), a lightweight framework that jointly learns token forget-specificity and model parameters during unlearning using a simple linear scorer over the hidden states, without external token level supervision. Across TOFU and RWKU, ATWU achieves state of the art forget-retain trade-offs, outperforming sample-level methods, probability-based token weighting heuristics, and auxiliary-model-based approaches. Moreover, the learned scores align substantially better with ground truth forget-specific spans, indicating that ATWU identifies semantically meaningful token level forgetting signals. Overall, our results suggest that retain conflict provides an effective criterion for identifying what language models should forget, enabling unsupervised learning of token level forget-specificity directly from model representations with minimal computational overhead.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06320v1\n- PDF: https://arxiv.org/pdf/2606.06320v1\n- Score: 9/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

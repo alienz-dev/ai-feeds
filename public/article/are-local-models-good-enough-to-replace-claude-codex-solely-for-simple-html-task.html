@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Are local models good enough to replace Claude/Codex solely for simple HTML tasks? — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/are-local-models-good-enough-to-replace-claude-codex-solely-for-simple-html-task.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>Are local models good enough to replace Claude/Codex solely for simple HTML tasks?</h1>
+
+    <div class="meta">
+      <span class="score-badge score-7">7/10</span>
+      <span>Reddit</span>
+      <span>Sunday, June 7, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">This paper is relevant to fine-tuning and LLM integration as it discusses the capabilities of local models in generating simple HTML activities for elearning creation purposes, comparing them to Claude/Codex.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">I know local models can’t compete fully yet, but I’m curious about where the limits are. My use case is generating simple HTML activities for elearning creation purposes. I know others are creating apps and more advanced software. Where are the limits for where local models can compete?</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://www.reddit.com/r/LocalLLaMA/comments/1tyt63g/are_local_models_good_enough_to_replace/" target="_blank" rel="noopener">📄 Original</a>
+      
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> A_Wild_Entei</p>
+      <p><strong>Categories:</strong> LocalLLaMA</p>
+      <p><strong>Published:</strong> Sunday, June 7, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-are-local-models-good-enough-to-replace-claude-codex-solely-for-simple-html-task&content=---%0Atitle%3A%20%22Are%20local%20models%20good%20enough%20to%20replace%20Claude%2FCodex%20solely%20for%20simple%20HTML%20tasks%3F%22%0Asource%3A%20reddit%0Aurl%3A%20https%3A%2F%2Fwww.reddit.com%2Fr%2FLocalLLaMA%2Fcomments%2F1tyt63g%2Fare_local_models_good_enough_to_replace%2F%0Apdf_url%3A%20%0Ascore%3A%207%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22A_Wild_Entei%22%5D%0Atags%3A%20%5Bai-signal%2C%20LocalLLaMA%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20Are%20local%20models%20good%20enough%20to%20replace%20Claude%2FCodex%20solely%20for%20simple%20HTML%20tasks%3F%0A%0A%23%23%20Why%20This%20Matters%0AThis%20paper%20is%20relevant%20to%20fine-tuning%20and%20LLM%20integration%20as%20it%20discusses%20the%20capabilities%20of%20local%20models%20in%20generating%20simple%20HTML%20activities%20for%20elearning%20creation%20purposes%2C%20comparing%20them%20to%20Claude%2FCodex.%0A%0A%23%23%20Abstract%0AI%20know%20local%20models%20can%E2%80%99t%20compete%20fully%20yet%2C%20but%20I%E2%80%99m%20curious%20about%20where%20the%20limits%20are.%20My%20use%20case%20is%20generating%20simple%20HTML%20activities%20for%20elearning%20creation%20purposes.%20I%20know%20others%20are%20creating%20apps%20and%20more%20advanced%20software.%20Where%20are%20the%20limits%20for%20where%20local%20models%20can%20compete%3F%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Fwww.reddit.com%2Fr%2FLocalLLaMA%2Fcomments%2F1tyt63g%2Fare_local_models_good_enough_to_replace%2F%0A%0A-%20Score%3A%207%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-are-local-models-good-enough-to-replace-claude-codex-solely-for-simple-html-task.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"Are local models good enough to replace Claude/Codex solely for simple HTML tasks?\"\nsource: reddit\nurl: https://www.reddit.com/r/LocalLLaMA/comments/1tyt63g/are_local_models_good_enough_to_replace/\npdf_url: \nscore: 7\ndate: 2026-06-07\nauthors: [\"A_Wild_Entei\"]\ntags: [ai-signal, LocalLLaMA]\nstatus: inbox\n---\n\n# Are local models good enough to replace Claude/Codex solely for simple HTML tasks?\n\n## Why This Matters\nThis paper is relevant to fine-tuning and LLM integration as it discusses the capabilities of local models in generating simple HTML activities for elearning creation purposes, comparing them to Claude/Codex.\n\n## Abstract\nI know local models can’t compete fully yet, but I’m curious about where the limits are. My use case is generating simple HTML activities for elearning creation purposes. I know others are creating apps and more advanced software. Where are the limits for where local models can compete?\n\n## Source\n- Original: https://www.reddit.com/r/LocalLLaMA/comments/1tyt63g/are_local_models_good_enough_to_replace/\n\n- Score: 7/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

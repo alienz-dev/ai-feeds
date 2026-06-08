@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepSeek V4 Flash is amazing! (WIP llama.cpp PR #24162) — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/deepseek-v4-flash-is-amazing-wip-llama-cpp-pr-24162.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>DeepSeek V4 Flash is amazing! (WIP llama.cpp PR #24162)</h1>
+
+    <div class="meta">
+      <span class="score-badge score-8">8/10</span>
+      <span>Reddit</span>
+      <span>Saturday, June 6, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">The abstract discusses the DeepSeek V4 Flash model and its performance on local inference. It mentions the model&#039;s intelligence, efficiency, and context window scaling, which is related to LLM integration and fine-tuning. The abstract provides specific technical content and empirical results.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">In case you&#039;re not aware already, the DeepSeek V4 series is finally getting supported on llama.cpp with this PR!
+    
+      The PR is at a very early stage right now, so only try it if you&#039;re consciously willing to experiment out of curiosity and accept severe stability/performance tradeoffs. It runs very slow (5-6 tps), GPU and FA support need work, etc., but it is reliable-enough already for correctness.
+    
+      This is my most anticipated model and I had some time to spare, so I ended up downloading the HF model for DS-V4-Flash and quantizing it myself using the PR(Made a custom 3-bit quant to mimic the full-sized model&#039;s tensor layout). And wow!
+    
+      The model perfectly addresses the crucial three pillars for local inference IMO:
+    
+        
+      
+      The model&#039;s intelligence is amazing for its size. First time a local model in this size range actually feels comparable to frontier models, and I&#039;m not exaggerating.
+    
+    
+      
+      Fares a lot better against quantization since it&#039;s natively an FP4-FP8 hybrid. This is crucial for local deployment and is my primary problem with models like MiniMax M2.7, where I&#039;m not happy even with UD-Q4_K_XL.
+    
+    
+      
+      Incredibly efficient with context window scaling. Consumes way less KV cache size with no flash attention!
+    
+    
+      
+      Qwen 3.5/3.6 series is also a huge hit amongst the local community since it addresses the three pillars above way better than its competitors. However, I feel the DeepSeek model has levelled it up even further, and I predict it will easily dominate the 80-140GB model space for many more months to come.
+    
+      Huge shoutout and thanks to fairydreaming for their relentless work on getting DSA implemented, and to am17an and pwilkin for taking this up! Really looking forward to this PR getting merged!</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://www.reddit.com/r/LocalLLaMA/comments/1tyb3np/deepseek_v4_flash_is_amazing_wip_llamacpp_pr_24162/" target="_blank" rel="noopener">📄 Original</a>
+      
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Lowkey_LokiSN</p>
+      <p><strong>Categories:</strong> LocalLLaMA</p>
+      <p><strong>Published:</strong> Saturday, June 6, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-deepseek-v4-flash-is-amazing-wip-llama-cpp-pr-24162&content=---%0Atitle%3A%20%22DeepSeek%20V4%20Flash%20is%20amazing!%20(WIP%20llama.cpp%20PR%20%2324162)%22%0Asource%3A%20reddit%0Aurl%3A%20https%3A%2F%2Fwww.reddit.com%2Fr%2FLocalLLaMA%2Fcomments%2F1tyb3np%2Fdeepseek_v4_flash_is_amazing_wip_llamacpp_pr_24162%2F%0Apdf_url%3A%20%0Ascore%3A%208%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Lowkey_LokiSN%22%5D%0Atags%3A%20%5Bai-signal%2C%20LocalLLaMA%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20DeepSeek%20V4%20Flash%20is%20amazing!%20(WIP%20llama.cpp%20PR%20%2324162)%0A%0A%23%23%20Why%20This%20Matters%0AThe%20abstract%20discusses%20the%20DeepSeek%20V4%20Flash%20model%20and%20its%20performance%20on%20local%20inference.%20It%20mentions%20the%20model's%20intelligence%2C%20efficiency%2C%20and%20context%20window%20scaling%2C%20which%20is%20related%20to%20LLM%20integration%20and%20fine-tuning.%20The%20abstract%20provides%20specific%20technical%20content%20and%20empirical%20results.%0A%0A%23%23%20Abstract%0AIn%20case%20you're%20not%20aware%20already%2C%20the%20DeepSeek%20V4%20series%20is%20finally%20getting%20supported%20on%20llama.cpp%20with%20this%20PR!%0A%20%20%20%20%0A%20%20%20%20%20%20The%20PR%20is%20at%20a%20very%20early%20stage%20right%20now%2C%20so%20only%20try%20it%20if%20you're%20consciously%20willing%20to%20experiment%20out%20of%20curiosity%20and%20accept%20severe%20stability%2Fperformance%20tradeoffs.%20It%20runs%20very%20slow%20(5-6%20tps)%2C%20GPU%20and%20FA%20support%20need%20work%2C%20etc.%2C%20but%20it%20is%20reliable-enough%20already%20for%20correctness.%0A%20%20%20%20%0A%20%20%20%20%20%20This%20is%20my%20most%20anticipated%20model%20and%20I%20had%20some%20time%20to%20spare%2C%20so%20I%20ended%20up%20downloading%20the%20HF%20model%20for%20DS-V4-Flash%20and%20quantizing%20it%20myself%20using%20the%20PR(Made%20a%20custom%203-bit%20quant%20to%20mimic%20the%20full-sized%20model's%20tensor%20layout).%20And%20wow!%0A%20%20%20%20%0A%20%20%20%20%20%20The%20model%20perfectly%20addresses%20the%20crucial%20three%20pillars%20for%20local%20inference%20IMO%3A%0A%20%20%20%20%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20The%20model's%20intelligence%20is%20amazing%20for%20its%20size.%20First%20time%20a%20local%20model%20in%20this%20size%20range%20actually%20feels%20comparable%20to%20frontier%20models%2C%20and%20I'm%20not%20exaggerating.%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20Fares%20a%20lot%20better%20against%20quantization%20since%20it's%20natively%20an%20FP4-FP8%20hybrid.%20This%20is%20crucial%20for%20local%20deployment%20and%20is%20my%20primary%20problem%20with%20models%20like%20MiniMax%20M2.7%2C%20where%20I'm%20not%20happy%20even%20with%20UD-Q4_K_XL.%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20Incredibly%20efficient%20with%20context%20window%20scaling.%20Consumes%20way%20less%20KV%20cache%20size%20with%20no%20flash%20attention!%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20Qwen%203.5%2F3.6%20series%20is%20also%20a%20huge%20hit%20amongst%20the%20local%20community%20since%20it%20addresses%20the%20three%20pillars%20above%20way%20better%20than%20its%20competitors.%20However%2C%20I%20feel%20the%20DeepSeek%20model%20has%20levelled%20it%20up%20even%20further%2C%20and%20I%20predict%20it%20will%20easily%20dominate%20the%2080-140GB%20model%20space%20for%20many%20more%20months%20to%20come.%0A%20%20%20%20%0A%20%20%20%20%20%20Huge%20shoutout%20and%20thanks%20to%20fairydreaming%20for%20their%20relentless%20work%20on%20getting%20DSA%20implemented%2C%20and%20to%20am17an%20and%20pwilkin%20for%20taking%20this%20up!%20Really%20looking%20forward%20to%20this%20PR%20getting%20merged!%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Fwww.reddit.com%2Fr%2FLocalLLaMA%2Fcomments%2F1tyb3np%2Fdeepseek_v4_flash_is_amazing_wip_llamacpp_pr_24162%2F%0A%0A-%20Score%3A%208%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-deepseek-v4-flash-is-amazing-wip-llama-cpp-pr-24162.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"DeepSeek V4 Flash is amazing! (WIP llama.cpp PR #24162)\"\nsource: reddit\nurl: https://www.reddit.com/r/LocalLLaMA/comments/1tyb3np/deepseek_v4_flash_is_amazing_wip_llamacpp_pr_24162/\npdf_url: \nscore: 8\ndate: 2026-06-07\nauthors: [\"Lowkey_LokiSN\"]\ntags: [ai-signal, LocalLLaMA]\nstatus: inbox\n---\n\n# DeepSeek V4 Flash is amazing! (WIP llama.cpp PR #24162)\n\n## Why This Matters\nThe abstract discusses the DeepSeek V4 Flash model and its performance on local inference. It mentions the model's intelligence, efficiency, and context window scaling, which is related to LLM integration and fine-tuning. The abstract provides specific technical content and empirical results.\n\n## Abstract\nIn case you're not aware already, the DeepSeek V4 series is finally getting supported on llama.cpp with this PR!\n    \n      The PR is at a very early stage right now, so only try it if you're consciously willing to experiment out of curiosity and accept severe stability/performance tradeoffs. It runs very slow (5-6 tps), GPU and FA support need work, etc., but it is reliable-enough already for correctness.\n    \n      This is my most anticipated model and I had some time to spare, so I ended up downloading the HF model for DS-V4-Flash and quantizing it myself using the PR(Made a custom 3-bit quant to mimic the full-sized model's tensor layout). And wow!\n    \n      The model perfectly addresses the crucial three pillars for local inference IMO:\n    \n        \n      \n      The model's intelligence is amazing for its size. First time a local model in this size range actually feels comparable to frontier models, and I'm not exaggerating.\n    \n    \n      \n      Fares a lot better against quantization since it's natively an FP4-FP8 hybrid. This is crucial for local deployment and is my primary problem with models like MiniMax M2.7, where I'm not happy even with UD-Q4_K_XL.\n    \n    \n      \n      Incredibly efficient with context window scaling. Consumes way less KV cache size with no flash attention!\n    \n    \n      \n      Qwen 3.5/3.6 series is also a huge hit amongst the local community since it addresses the three pillars above way better than its competitors. However, I feel the DeepSeek model has levelled it up even further, and I predict it will easily dominate the 80-140GB model space for many more months to come.\n    \n      Huge shoutout and thanks to fairydreaming for their relentless work on getting DSA implemented, and to am17an and pwilkin for taking this up! Really looking forward to this PR getting merged!\n\n## Source\n- Original: https://www.reddit.com/r/LocalLLaMA/comments/1tyb3np/deepseek_v4_flash_is_amazing_wip_llamacpp_pr_24162/\n\n- Score: 8/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

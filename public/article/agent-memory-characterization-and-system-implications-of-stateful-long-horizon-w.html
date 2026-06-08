@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-w.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads</h1>
+
+    <div class="meta">
+      <span class="score-badge score-7">7/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">This paper is relevant to agent architectures and production AI. It discusses the characterization and system implications of stateful long-horizon workloads for LLM agents and presents a taxonomy and profiling harness.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">LLM agents are increasingly deployed on long-horizon tasks requiring sustained reasoning over extended interaction histories. Realizing this at scale requires agents to persistently store, retrieve, and update their own memory across sessions. A rich ecosystem of agent memory systems has emerged spanning flat retrieval, LLM-mediated extraction, consolidating fact stores, and agentic control flows. Yet, their system-level behavior remains uncharacterized. We present the first systems characterization of agent memory. First, we introduce a system-oriented taxonomy classifying agent memory systems along four axes. Second, we build a phase-aware profiling harness attributing cost to construction, retrieval, and generation. Third, we characterize ten representative systems across two benchmark suites, uncovering how design choices shift cost across the write and read paths. Finally, we derive 10 system recommendations covering construction scheduling, capability floors, amortization via query volume, freshness-latency tradeoffs, and fleet-scale management.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06448v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06448v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Yasmine Omri, Ziyu Gan, Zachary Broveak, Robin Geens, Zexue He, Alex Pentland, Marian Verhelst, Tsachy Weissman, Thierry Tambe</p>
+      <p><strong>Categories:</strong> cs.AI</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-agent-memory-characterization-and-system-implications-of-stateful-long-horizon-w&content=---%0Atitle%3A%20%22Agent%20Memory%3A%20Characterization%20and%20System%20Implications%20of%20Stateful%20Long-Horizon%20Workloads%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06448v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06448v1%0Ascore%3A%207%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Yasmine%20Omri%22%2C%20%22Ziyu%20Gan%22%2C%20%22Zachary%20Broveak%22%2C%20%22Robin%20Geens%22%2C%20%22Zexue%20He%22%2C%20%22Alex%20Pentland%22%2C%20%22Marian%20Verhelst%22%2C%20%22Tsachy%20Weissman%22%2C%20%22Thierry%20Tambe%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-AI%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20Agent%20Memory%3A%20Characterization%20and%20System%20Implications%20of%20Stateful%20Long-Horizon%20Workloads%0A%0A%23%23%20Why%20This%20Matters%0AThis%20paper%20is%20relevant%20to%20agent%20architectures%20and%20production%20AI.%20It%20discusses%20the%20characterization%20and%20system%20implications%20of%20stateful%20long-horizon%20workloads%20for%20LLM%20agents%20and%20presents%20a%20taxonomy%20and%20profiling%20harness.%0A%0A%23%23%20Abstract%0ALLM%20agents%20are%20increasingly%20deployed%20on%20long-horizon%20tasks%20requiring%20sustained%20reasoning%20over%20extended%20interaction%20histories.%20Realizing%20this%20at%20scale%20requires%20agents%20to%20persistently%20store%2C%20retrieve%2C%20and%20update%20their%20own%20memory%20across%20sessions.%20A%20rich%20ecosystem%20of%20agent%20memory%20systems%20has%20emerged%20spanning%20flat%20retrieval%2C%20LLM-mediated%20extraction%2C%20consolidating%20fact%20stores%2C%20and%20agentic%20control%20flows.%20Yet%2C%20their%20system-level%20behavior%20remains%20uncharacterized.%20We%20present%20the%20first%20systems%20characterization%20of%20agent%20memory.%20First%2C%20we%20introduce%20a%20system-oriented%20taxonomy%20classifying%20agent%20memory%20systems%20along%20four%20axes.%20Second%2C%20we%20build%20a%20phase-aware%20profiling%20harness%20attributing%20cost%20to%20construction%2C%20retrieval%2C%20and%20generation.%20Third%2C%20we%20characterize%20ten%20representative%20systems%20across%20two%20benchmark%20suites%2C%20uncovering%20how%20design%20choices%20shift%20cost%20across%20the%20write%20and%20read%20paths.%20Finally%2C%20we%20derive%2010%20system%20recommendations%20covering%20construction%20scheduling%2C%20capability%20floors%2C%20amortization%20via%20query%20volume%2C%20freshness-latency%20tradeoffs%2C%20and%20fleet-scale%20management.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06448v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06448v1%0A-%20Score%3A%207%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-agent-memory-characterization-and-system-implications-of-stateful-long-horizon-w.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06448v1\npdf_url: https://arxiv.org/pdf/2606.06448v1\nscore: 7\ndate: 2026-06-07\nauthors: [\"Yasmine Omri\", \"Ziyu Gan\", \"Zachary Broveak\", \"Robin Geens\", \"Zexue He\", \"Alex Pentland\", \"Marian Verhelst\", \"Tsachy Weissman\", \"Thierry Tambe\"]\ntags: [ai-signal, cs-AI]\nstatus: inbox\n---\n\n# Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads\n\n## Why This Matters\nThis paper is relevant to agent architectures and production AI. It discusses the characterization and system implications of stateful long-horizon workloads for LLM agents and presents a taxonomy and profiling harness.\n\n## Abstract\nLLM agents are increasingly deployed on long-horizon tasks requiring sustained reasoning over extended interaction histories. Realizing this at scale requires agents to persistently store, retrieve, and update their own memory across sessions. A rich ecosystem of agent memory systems has emerged spanning flat retrieval, LLM-mediated extraction, consolidating fact stores, and agentic control flows. Yet, their system-level behavior remains uncharacterized. We present the first systems characterization of agent memory. First, we introduce a system-oriented taxonomy classifying agent memory systems along four axes. Second, we build a phase-aware profiling harness attributing cost to construction, retrieval, and generation. Third, we characterize ten representative systems across two benchmark suites, uncovering how design choices shift cost across the write and read paths. Finally, we derive 10 system recommendations covering construction scheduling, capability floors, amortization via query volume, freshness-latency tradeoffs, and fleet-scale management.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06448v1\n- PDF: https://arxiv.org/pdf/2606.06448v1\n- Score: 7/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

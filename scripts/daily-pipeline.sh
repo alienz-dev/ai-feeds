@@ -66,7 +66,19 @@ if [[ "${1:-}" != "--skip-scorer" ]] && [[ -n "${ANTHROPIC_API_KEY:-}" || -n "${
   npx tsx processor/issue_generator.ts --limit 5 2>&1 || echo "  WARNING: issue generator failed"
 fi
 
-# 6. Send Telegram notification (only if high-scoring papers exist)
+# 6. Generate static site
+echo ""
+echo "--- Generating static site ---"
+npx tsx scripts/generate-site.ts --date "$DATE" 2>&1 || echo "  WARNING: site generation failed"
+
+# 7. Deploy to Vercel (if site is enabled)
+if [[ -d "public" ]] && [[ -f "vercel.json" ]]; then
+  echo ""
+  echo "--- Deploying to Vercel ---"
+  vercel deploy --prod --yes 2>&1 || echo "  WARNING: Vercel deploy failed"
+fi
+
+# 8. Send Telegram notification (only if high-scoring papers exist)
 echo ""
 echo "--- Checking for Telegram notification ---"
 "${SCRIPT_DIR}/notify-telegram.sh" "$DATE" 2>&1 || echo "  WARNING: Telegram notification failed"

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToolChoiceConfusion: Causal Minimal Tool Filtering for Reliable LLM Agents — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/toolchoiceconfusion-causal-minimal-tool-filtering-for-reliable-llm-agents.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>ToolChoiceConfusion: Causal Minimal Tool Filtering for Reliable LLM Agents</h1>
+
+    <div class="meta">
+      <span class="score-badge score-8">8/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">Directly addresses LLM integration, agent architectures, and fine-tuning, with specific technical content on Causal Minimal Tool Filtering (CMTF) and empirical results.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Large language model agents increasingly rely on external tools, but larger tool menus can reduce reliability and efficiency by increasing wrong-tool calls, premature actions, and token cost. Existing tool-selection methods often optimize semantic relevance, exposing tools whose names or descriptions match the user request. We argue that relevance is insufficient: a tool may be related to the task while still being unnecessary or premature at the current step. We propose Causal Minimal Tool Filtering (CMTF), a training-free method that selects tools by causal sufficiency. CMTF uses lightweight precondition-effect contracts to expose only the minimal next-step tool frontier needed to advance from the current state toward the user goal. Across multi-step tool-use tasks, we compare CMTF with all-tools exposure, keyword retrieval, state-aware filtering, and causal-path ablations, measuring task success, wrong-tool calls, premature actions, tool exposure, and token cost. In the main benchmark with 102 tasks, 100 tools, four LLM backends, and 2448 task-method-model runs, CMTF matches the strongest causal baseline in aggregate success while reducing visible tools from 100 to one per step and reducing token usage by about 90% relative to all-tools exposure.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06284v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06284v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Rahul Suresh Babu, Laxmipriya Ganesh Iyer</p>
+      <p><strong>Categories:</strong> cs.AI</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-toolchoiceconfusion-causal-minimal-tool-filtering-for-reliable-llm-agents&content=---%0Atitle%3A%20%22ToolChoiceConfusion%3A%20Causal%20Minimal%20Tool%20Filtering%20for%20Reliable%20LLM%20Agents%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06284v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06284v1%0Ascore%3A%208%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Rahul%20Suresh%20Babu%22%2C%20%22Laxmipriya%20Ganesh%20Iyer%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-AI%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20ToolChoiceConfusion%3A%20Causal%20Minimal%20Tool%20Filtering%20for%20Reliable%20LLM%20Agents%0A%0A%23%23%20Why%20This%20Matters%0ADirectly%20addresses%20LLM%20integration%2C%20agent%20architectures%2C%20and%20fine-tuning%2C%20with%20specific%20technical%20content%20on%20Causal%20Minimal%20Tool%20Filtering%20(CMTF)%20and%20empirical%20results.%0A%0A%23%23%20Abstract%0ALarge%20language%20model%20agents%20increasingly%20rely%20on%20external%20tools%2C%20but%20larger%20tool%20menus%20can%20reduce%20reliability%20and%20efficiency%20by%20increasing%20wrong-tool%20calls%2C%20premature%20actions%2C%20and%20token%20cost.%20Existing%20tool-selection%20methods%20often%20optimize%20semantic%20relevance%2C%20exposing%20tools%20whose%20names%20or%20descriptions%20match%20the%20user%20request.%20We%20argue%20that%20relevance%20is%20insufficient%3A%20a%20tool%20may%20be%20related%20to%20the%20task%20while%20still%20being%20unnecessary%20or%20premature%20at%20the%20current%20step.%20We%20propose%20Causal%20Minimal%20Tool%20Filtering%20(CMTF)%2C%20a%20training-free%20method%20that%20selects%20tools%20by%20causal%20sufficiency.%20CMTF%20uses%20lightweight%20precondition-effect%20contracts%20to%20expose%20only%20the%20minimal%20next-step%20tool%20frontier%20needed%20to%20advance%20from%20the%20current%20state%20toward%20the%20user%20goal.%20Across%20multi-step%20tool-use%20tasks%2C%20we%20compare%20CMTF%20with%20all-tools%20exposure%2C%20keyword%20retrieval%2C%20state-aware%20filtering%2C%20and%20causal-path%20ablations%2C%20measuring%20task%20success%2C%20wrong-tool%20calls%2C%20premature%20actions%2C%20tool%20exposure%2C%20and%20token%20cost.%20In%20the%20main%20benchmark%20with%20102%20tasks%2C%20100%20tools%2C%20four%20LLM%20backends%2C%20and%202448%20task-method-model%20runs%2C%20CMTF%20matches%20the%20strongest%20causal%20baseline%20in%20aggregate%20success%20while%20reducing%20visible%20tools%20from%20100%20to%20one%20per%20step%20and%20reducing%20token%20usage%20by%20about%2090%25%20relative%20to%20all-tools%20exposure.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06284v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06284v1%0A-%20Score%3A%208%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-toolchoiceconfusion-causal-minimal-tool-filtering-for-reliable-llm-agents.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"ToolChoiceConfusion: Causal Minimal Tool Filtering for Reliable LLM Agents\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06284v1\npdf_url: https://arxiv.org/pdf/2606.06284v1\nscore: 8\ndate: 2026-06-07\nauthors: [\"Rahul Suresh Babu\", \"Laxmipriya Ganesh Iyer\"]\ntags: [ai-signal, cs-AI]\nstatus: inbox\n---\n\n# ToolChoiceConfusion: Causal Minimal Tool Filtering for Reliable LLM Agents\n\n## Why This Matters\nDirectly addresses LLM integration, agent architectures, and fine-tuning, with specific technical content on Causal Minimal Tool Filtering (CMTF) and empirical results.\n\n## Abstract\nLarge language model agents increasingly rely on external tools, but larger tool menus can reduce reliability and efficiency by increasing wrong-tool calls, premature actions, and token cost. Existing tool-selection methods often optimize semantic relevance, exposing tools whose names or descriptions match the user request. We argue that relevance is insufficient: a tool may be related to the task while still being unnecessary or premature at the current step. We propose Causal Minimal Tool Filtering (CMTF), a training-free method that selects tools by causal sufficiency. CMTF uses lightweight precondition-effect contracts to expose only the minimal next-step tool frontier needed to advance from the current state toward the user goal. Across multi-step tool-use tasks, we compare CMTF with all-tools exposure, keyword retrieval, state-aware filtering, and causal-path ablations, measuring task success, wrong-tool calls, premature actions, tool exposure, and token cost. In the main benchmark with 102 tasks, 100 tools, four LLM backends, and 2448 task-method-model runs, CMTF matches the strongest causal baseline in aggregate success while reducing visible tools from 100 to one per step and reducing token usage by about 90% relative to all-tools exposure.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06284v1\n- PDF: https://arxiv.org/pdf/2606.06284v1\n- Score: 8/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

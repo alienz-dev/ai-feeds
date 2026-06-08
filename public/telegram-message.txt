@@ -1,0 +1,46 @@
+📡 AI Signals — 2026-06-07
+
+🔥 TOP PICKS (4)
+• Self-Augmenting Retrieval for Diffusion Language Models
+  Highly relevant to LLM integration, RAG, and fine-tuning through the proposal…
+  → https://signals.mingli.world/article/self-augmenting-retrieval-for-diffusion-language-models
+
+• You Only Index Once: Cross-Layer Sparse Attention with Shared Routing
+  This paper is highly relevant to LLM integration, fine-tuning, and production…
+  → https://signals.mingli.world/article/you-only-index-once-cross-layer-sparse-attention-with-shared-routing
+
+• Vortex: Efficient and Programmable Sparse Attention Serving for AI Agents
+  This paper is highly relevant to LLM integration, fine-tuning, and production…
+  → https://signals.mingli.world/article/vortex-efficient-and-programmable-sparse-attention-serving-for-ai-agents
+
+• Learning What to Forget: Improving LLM Unlearning via Learned Token-Level Importance
+  Highly relevant to LLM integration and fine-tuning, as it discusses machine…
+  → https://signals.mingli.world/article/learning-what-to-forget-improving-llm-unlearning-via-learned-token-level-importa
+
+⭐ WORTH READING (10)
+• Code2LoRA: Hypernetwork-Generated Adapters for Code Language Models under Software Evolution
+  → https://signals.mingli.world/article/code2lora-hypernetwork-generated-adapters-for-code-language-models-under-softwar
+• Operation-Guided Progressive Human-to-AI Text Transformation Benchmark for Multi-Granularity AI-Text Detection
+  → https://signals.mingli.world/article/operation-guided-progressive-human-to-ai-text-transformation-benchmark-for-multi
+• Scaffold, Not Vocabulary? A Controlled, Two-Tier, Pre-Registered Study of a Popperian Code-Generation Skill
+  → https://signals.mingli.world/article/scaffold-not-vocabulary-a-controlled-two-tier-pre-registered-study-of-a-popperia
+• Revising Context, Shifting Simulated Stance: Auditing LLM-Based Stance Simulation in Online Discussions
+  → https://signals.mingli.world/article/revising-context-shifting-simulated-stance-auditing-llm-based-stance-simulation-
+• DragOn: A Benchmark and Dataset for Drag-Based GUI Interactions
+  → https://signals.mingli.world/article/dragon-a-benchmark-and-dataset-for-drag-based-gui-interactions
+• Decomposing Factual Sycophancy in Language Models: How Size and Instruction Tuning Shape Robustness
+  → https://signals.mingli.world/article/decomposing-factual-sycophancy-in-language-models-how-size-and-instruction-tunin
+• ToolChoiceConfusion: Causal Minimal Tool Filtering for Reliable LLM Agents
+  → https://signals.mingli.world/article/toolchoiceconfusion-causal-minimal-tool-filtering-for-reliable-llm-agents
+• From Self to Other: Evaluating Demographic Perspective-Taking in LLM Hate Speech Annotation
+  → https://signals.mingli.world/article/from-self-to-other-evaluating-demographic-perspective-taking-in-llm-hate-speech-
+• Towards the Readability of LLM-Generated Codes through Multitask Representation Engineering
+  → https://signals.mingli.world/article/towards-the-readability-of-llm-generated-codes-through-multitask-representation-
+• DeepSeek V4 Flash is amazing! (WIP llama.cpp PR #24162)
+  → https://signals.mingli.world/article/deepseek-v4-flash-is-amazing-wip-llama-cpp-pr-24162
+
+📌 ALSO NOTED (8)
+TailLoR • RREDCoT • Agent Memory • Reinforcement Learning Elicits Contextual Learning of Unseen Language Translation • PAMF
+  +3 more
+
+🔗 Full digest: https://signals.mingli.world/2026-06-07

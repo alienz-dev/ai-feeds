@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code2LoRA: Hypernetwork-Generated Adapters for Code Language Models under Software Evolution — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/code2lora-hypernetwork-generated-adapters-for-code-language-models-under-softwar.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>Code2LoRA: Hypernetwork-Generated Adapters for Code Language Models under Software Evolution</h1>
+
+    <div class="meta">
+      <span class="score-badge score-8">8/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">This paper is relevant to RAG, fine-tuning, and LLM integration as it introduces Code2LoRA, a hypernetwork framework that generates repository-specific LoRA adapters for code language models, effectively injecting repository knowledge with zero inference-time token overhead.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Code language models need repository-level context to resolve imports, APIs, and project conventions. Existing methods inject this knowledge as long inputs (retrieved through RAG or dependency analysis) or through per-repository fine-tuning and LoRA -- costly at repository scale and brittle to evolving codebases. We introduce Code2LoRA, a hypernetwork framework that generates repository-specific LoRA adapters, effectively injecting repository knowledge with zero inference-time token overhead. Code2LoRA supports two usage scenarios: Code2LoRA-Static converts a single repository snapshot into an adapter, suitable for comprehension of stable codebases; while Code2LoRA-Evo maintains an adapter backed by a GRU hidden state updated per code diff, suitable for active development of evolving codebases. To evaluate Code2LoRA against parameter-efficient fine-tuning baselines, we build RepoPeftBench, a benchmark of 604 Python repositories with two tracks: a static track with 40K training and 12K test assertion-completion tasks, and an evolution track with 215K commit-derived training and 87K commit-derived test tasks. On the static track, Code2LoRA-Static achieves 63.8% cross-repo and 66.2% in-repo exact match, matching the per-repository LoRA upper bound; on the evolution track, Code2LoRA-Evo achieves 60.3% cross-repo exact match (+5.2 pp over a single shared LoRA). Code2LoRA&#039;s code can be found at https://anonymous.4open.science/r/code2lora-6857; the model checkpoints and RepoPeftBench datasets can be found at https://huggingface.co/code2lora.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06492v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06492v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Liliana Hotsko, Yinxi Li, Yuntian Deng, Pengyu Nie</p>
+      <p><strong>Categories:</strong> cs.SE, cs.AI, cs.CL</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-code2lora-hypernetwork-generated-adapters-for-code-language-models-under-softwar&content=---%0Atitle%3A%20%22Code2LoRA%3A%20Hypernetwork-Generated%20Adapters%20for%20Code%20Language%20Models%20under%20Software%20Evolution%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06492v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06492v1%0Ascore%3A%208%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Liliana%20Hotsko%22%2C%20%22Yinxi%20Li%22%2C%20%22Yuntian%20Deng%22%2C%20%22Pengyu%20Nie%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-SE%2C%20cs-AI%2C%20cs-CL%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20Code2LoRA%3A%20Hypernetwork-Generated%20Adapters%20for%20Code%20Language%20Models%20under%20Software%20Evolution%0A%0A%23%23%20Why%20This%20Matters%0AThis%20paper%20is%20relevant%20to%20RAG%2C%20fine-tuning%2C%20and%20LLM%20integration%20as%20it%20introduces%20Code2LoRA%2C%20a%20hypernetwork%20framework%20that%20generates%20repository-specific%20LoRA%20adapters%20for%20code%20language%20models%2C%20effectively%20injecting%20repository%20knowledge%20with%20zero%20inference-time%20token%20overhead.%0A%0A%23%23%20Abstract%0ACode%20language%20models%20need%20repository-level%20context%20to%20resolve%20imports%2C%20APIs%2C%20and%20project%20conventions.%20Existing%20methods%20inject%20this%20knowledge%20as%20long%20inputs%20(retrieved%20through%20RAG%20or%20dependency%20analysis)%20or%20through%20per-repository%20fine-tuning%20and%20LoRA%20--%20costly%20at%20repository%20scale%20and%20brittle%20to%20evolving%20codebases.%20We%20introduce%20Code2LoRA%2C%20a%20hypernetwork%20framework%20that%20generates%20repository-specific%20LoRA%20adapters%2C%20effectively%20injecting%20repository%20knowledge%20with%20zero%20inference-time%20token%20overhead.%20Code2LoRA%20supports%20two%20usage%20scenarios%3A%20Code2LoRA-Static%20converts%20a%20single%20repository%20snapshot%20into%20an%20adapter%2C%20suitable%20for%20comprehension%20of%20stable%20codebases%3B%20while%20Code2LoRA-Evo%20maintains%20an%20adapter%20backed%20by%20a%20GRU%20hidden%20state%20updated%20per%20code%20diff%2C%20suitable%20for%20active%20development%20of%20evolving%20codebases.%20To%20evaluate%20Code2LoRA%20against%20parameter-efficient%20fine-tuning%20baselines%2C%20we%20build%20RepoPeftBench%2C%20a%20benchmark%20of%20604%20Python%20repositories%20with%20two%20tracks%3A%20a%20static%20track%20with%2040K%20training%20and%2012K%20test%20assertion-completion%20tasks%2C%20and%20an%20evolution%20track%20with%20215K%20commit-derived%20training%20and%2087K%20commit-derived%20test%20tasks.%20On%20the%20static%20track%2C%20Code2LoRA-Static%20achieves%2063.8%25%20cross-repo%20and%2066.2%25%20in-repo%20exact%20match%2C%20matching%20the%20per-repository%20LoRA%20upper%20bound%3B%20on%20the%20evolution%20track%2C%20Code2LoRA-Evo%20achieves%2060.3%25%20cross-repo%20exact%20match%20(%2B5.2%20pp%20over%20a%20single%20shared%20LoRA).%20Code2LoRA's%20code%20can%20be%20found%20at%20https%3A%2F%2Fanonymous.4open.science%2Fr%2Fcode2lora-6857%3B%20the%20model%20checkpoints%20and%20RepoPeftBench%20datasets%20can%20be%20found%20at%20https%3A%2F%2Fhuggingface.co%2Fcode2lora.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06492v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06492v1%0A-%20Score%3A%208%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-code2lora-hypernetwork-generated-adapters-for-code-language-models-under-softwar.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"Code2LoRA: Hypernetwork-Generated Adapters for Code Language Models under Software Evolution\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06492v1\npdf_url: https://arxiv.org/pdf/2606.06492v1\nscore: 8\ndate: 2026-06-07\nauthors: [\"Liliana Hotsko\", \"Yinxi Li\", \"Yuntian Deng\", \"Pengyu Nie\"]\ntags: [ai-signal, cs-SE, cs-AI, cs-CL]\nstatus: inbox\n---\n\n# Code2LoRA: Hypernetwork-Generated Adapters for Code Language Models under Software Evolution\n\n## Why This Matters\nThis paper is relevant to RAG, fine-tuning, and LLM integration as it introduces Code2LoRA, a hypernetwork framework that generates repository-specific LoRA adapters for code language models, effectively injecting repository knowledge with zero inference-time token overhead.\n\n## Abstract\nCode language models need repository-level context to resolve imports, APIs, and project conventions. Existing methods inject this knowledge as long inputs (retrieved through RAG or dependency analysis) or through per-repository fine-tuning and LoRA -- costly at repository scale and brittle to evolving codebases. We introduce Code2LoRA, a hypernetwork framework that generates repository-specific LoRA adapters, effectively injecting repository knowledge with zero inference-time token overhead. Code2LoRA supports two usage scenarios: Code2LoRA-Static converts a single repository snapshot into an adapter, suitable for comprehension of stable codebases; while Code2LoRA-Evo maintains an adapter backed by a GRU hidden state updated per code diff, suitable for active development of evolving codebases. To evaluate Code2LoRA against parameter-efficient fine-tuning baselines, we build RepoPeftBench, a benchmark of 604 Python repositories with two tracks: a static track with 40K training and 12K test assertion-completion tasks, and an evolution track with 215K commit-derived training and 87K commit-derived test tasks. On the static track, Code2LoRA-Static achieves 63.8% cross-repo and 66.2% in-repo exact match, matching the per-repository LoRA upper bound; on the evolution track, Code2LoRA-Evo achieves 60.3% cross-repo exact match (+5.2 pp over a single shared LoRA). Code2LoRA's code can be found at https://anonymous.4open.science/r/code2lora-6857; the model checkpoints and RepoPeftBench datasets can be found at https://huggingface.co/code2lora.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06492v1\n- PDF: https://arxiv.org/pdf/2606.06492v1\n- Score: 8/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

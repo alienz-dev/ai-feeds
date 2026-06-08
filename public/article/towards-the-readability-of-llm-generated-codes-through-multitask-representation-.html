@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Towards the Readability of LLM-Generated Codes through Multitask Representation Engineering — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/towards-the-readability-of-llm-generated-codes-through-multitask-representation-.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>Towards the Readability of LLM-Generated Codes through Multitask Representation Engineering</h1>
+
+    <div class="meta">
+      <span class="score-badge score-8">8/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">This paper is relevant to LLM integration, fine-tuning, and context engineering. It proposes a multitask representation engineering framework to improve the readability of LLM-generated codes, providing theoretical discussions and comprehensive experiments.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Correctness and readability are key measures of code quality, respectively ensuring functional fidelity and ease of comprehension. While most existing research focuses on improving the correctness of large language models~(LLMs) generated codes, readability remains under-addressed. Enhancing readability through targeted control is challenging due to its subjective nature. In this article, we employ representation engineering~(RepE) as the targeted control method given its characteristics of low data dependency and low computational cost. Prior work on RepE has primarily focused on the targeted control for a single task, but improving the code readability requires the control across multiple tasks. Accordingly we proposes the multitask RepE framework and theoretically discuss the impact of the multitask steering method on the tradeoff between the code readability and correctness. We further provide comprehensive experiments in support. All the relevant implementations are open-source and available upon request.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06214v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06214v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Huifan Gao, Liuhua He, Yinghui Pan, Shenbao Yu, Yifeng Zeng, Shengchao Qin, Weidi Sun</p>
+      <p><strong>Categories:</strong> cs.SE, cs.AI</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-towards-the-readability-of-llm-generated-codes-through-multitask-representation-&content=---%0Atitle%3A%20%22Towards%20the%20Readability%20of%20LLM-Generated%20Codes%20through%20Multitask%20Representation%20Engineering%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06214v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06214v1%0Ascore%3A%208%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Huifan%20Gao%22%2C%20%22Liuhua%20He%22%2C%20%22Yinghui%20Pan%22%2C%20%22Shenbao%20Yu%22%2C%20%22Yifeng%20Zeng%22%2C%20%22Shengchao%20Qin%22%2C%20%22Weidi%20Sun%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-SE%2C%20cs-AI%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20Towards%20the%20Readability%20of%20LLM-Generated%20Codes%20through%20Multitask%20Representation%20Engineering%0A%0A%23%23%20Why%20This%20Matters%0AThis%20paper%20is%20relevant%20to%20LLM%20integration%2C%20fine-tuning%2C%20and%20context%20engineering.%20It%20proposes%20a%20multitask%20representation%20engineering%20framework%20to%20improve%20the%20readability%20of%20LLM-generated%20codes%2C%20providing%20theoretical%20discussions%20and%20comprehensive%20experiments.%0A%0A%23%23%20Abstract%0ACorrectness%20and%20readability%20are%20key%20measures%20of%20code%20quality%2C%20respectively%20ensuring%20functional%20fidelity%20and%20ease%20of%20comprehension.%20While%20most%20existing%20research%20focuses%20on%20improving%20the%20correctness%20of%20large%20language%20models~(LLMs)%20generated%20codes%2C%20readability%20remains%20under-addressed.%20Enhancing%20readability%20through%20targeted%20control%20is%20challenging%20due%20to%20its%20subjective%20nature.%20In%20this%20article%2C%20we%20employ%20representation%20engineering~(RepE)%20as%20the%20targeted%20control%20method%20given%20its%20characteristics%20of%20low%20data%20dependency%20and%20low%20computational%20cost.%20Prior%20work%20on%20RepE%20has%20primarily%20focused%20on%20the%20targeted%20control%20for%20a%20single%20task%2C%20but%20improving%20the%20code%20readability%20requires%20the%20control%20across%20multiple%20tasks.%20Accordingly%20we%20proposes%20the%20multitask%20RepE%20framework%20and%20theoretically%20discuss%20the%20impact%20of%20the%20multitask%20steering%20method%20on%20the%20tradeoff%20between%20the%20code%20readability%20and%20correctness.%20We%20further%20provide%20comprehensive%20experiments%20in%20support.%20All%20the%20relevant%20implementations%20are%20open-source%20and%20available%20upon%20request.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06214v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06214v1%0A-%20Score%3A%208%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-towards-the-readability-of-llm-generated-codes-through-multitask-representation-.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"Towards the Readability of LLM-Generated Codes through Multitask Representation Engineering\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06214v1\npdf_url: https://arxiv.org/pdf/2606.06214v1\nscore: 8\ndate: 2026-06-07\nauthors: [\"Huifan Gao\", \"Liuhua He\", \"Yinghui Pan\", \"Shenbao Yu\", \"Yifeng Zeng\", \"Shengchao Qin\", \"Weidi Sun\"]\ntags: [ai-signal, cs-SE, cs-AI]\nstatus: inbox\n---\n\n# Towards the Readability of LLM-Generated Codes through Multitask Representation Engineering\n\n## Why This Matters\nThis paper is relevant to LLM integration, fine-tuning, and context engineering. It proposes a multitask representation engineering framework to improve the readability of LLM-generated codes, providing theoretical discussions and comprehensive experiments.\n\n## Abstract\nCorrectness and readability are key measures of code quality, respectively ensuring functional fidelity and ease of comprehension. While most existing research focuses on improving the correctness of large language models~(LLMs) generated codes, readability remains under-addressed. Enhancing readability through targeted control is challenging due to its subjective nature. In this article, we employ representation engineering~(RepE) as the targeted control method given its characteristics of low data dependency and low computational cost. Prior work on RepE has primarily focused on the targeted control for a single task, but improving the code readability requires the control across multiple tasks. Accordingly we proposes the multitask RepE framework and theoretically discuss the impact of the multitask steering method on the tradeoff between the code readability and correctness. We further provide comprehensive experiments in support. All the relevant implementations are open-source and available upon request.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06214v1\n- PDF: https://arxiv.org/pdf/2606.06214v1\n- Score: 8/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

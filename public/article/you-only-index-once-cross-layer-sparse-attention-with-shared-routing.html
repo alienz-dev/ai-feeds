@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You Only Index Once: Cross-Layer Sparse Attention with Shared Routing — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/you-only-index-once-cross-layer-sparse-attention-with-shared-routing.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>You Only Index Once: Cross-Layer Sparse Attention with Shared Routing</h1>
+
+    <div class="meta">
+      <span class="score-badge score-9">9/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">This paper is highly relevant to LLM integration, fine-tuning, and production AI. It proposes a novel cross-layer sparse attention architecture for long-context inference in large language models, demonstrating its efficiency and accuracy in certain scenarios. The paper provides specific technical content, including methods, benchmarks, and empirical results.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Long-context inference in modern LLMs is increasingly constrained by decoding efficiency, especially in reasoning-heavy settings where models generate long intermediate chains of thought. Existing sparse attention methods often face a practical efficiency-quality trade-off. Structured block sparse methods typically provide stronger acceleration but incur noticeable quality loss, while token sparse methods are usually more accurate yet deliver limited end-to-end speedup because top-k routing over the full cache remains expensive. In this work, we propose cross-layer sparse attention (CLSA), which is built on top of KV-sharing architectures such as YOCO. The core idea is to share not only the KV cache across cross-decoder layers, but also the routing index. A single indexer computes token-level top-k selection once and reuses the resulting index across layers, thereby preserving the fine-grained selectivity of token sparse attention while amortizing the routing overhead. The resulting architecture improves all major inference bottlenecks jointly, including pre-filling, KV-cache storage, and long-context decoding. Experiments across short-context and long-context benchmarks show that CLSA is both accurate and efficient, achieving up to 7.6x decoding speedup and 17.1x overall throughput improvement at 128K context. These results suggest a more complete architectural solution for long-context LLMs that jointly advances model quality and inference efficiency.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06467v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06467v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Yutao Sun, Yanqi Zhang, Li Dong, Jianyong Wang, Furu Wei</p>
+      <p><strong>Categories:</strong> cs.CL, cs.AI, cs.LG</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-you-only-index-once-cross-layer-sparse-attention-with-shared-routing&content=---%0Atitle%3A%20%22You%20Only%20Index%20Once%3A%20Cross-Layer%20Sparse%20Attention%20with%20Shared%20Routing%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06467v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06467v1%0Ascore%3A%209%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Yutao%20Sun%22%2C%20%22Yanqi%20Zhang%22%2C%20%22Li%20Dong%22%2C%20%22Jianyong%20Wang%22%2C%20%22Furu%20Wei%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-CL%2C%20cs-AI%2C%20cs-LG%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20You%20Only%20Index%20Once%3A%20Cross-Layer%20Sparse%20Attention%20with%20Shared%20Routing%0A%0A%23%23%20Why%20This%20Matters%0AThis%20paper%20is%20highly%20relevant%20to%20LLM%20integration%2C%20fine-tuning%2C%20and%20production%20AI.%20It%20proposes%20a%20novel%20cross-layer%20sparse%20attention%20architecture%20for%20long-context%20inference%20in%20large%20language%20models%2C%20demonstrating%20its%20efficiency%20and%20accuracy%20in%20certain%20scenarios.%20The%20paper%20provides%20specific%20technical%20content%2C%20including%20methods%2C%20benchmarks%2C%20and%20empirical%20results.%0A%0A%23%23%20Abstract%0ALong-context%20inference%20in%20modern%20LLMs%20is%20increasingly%20constrained%20by%20decoding%20efficiency%2C%20especially%20in%20reasoning-heavy%20settings%20where%20models%20generate%20long%20intermediate%20chains%20of%20thought.%20Existing%20sparse%20attention%20methods%20often%20face%20a%20practical%20efficiency-quality%20trade-off.%20Structured%20block%20sparse%20methods%20typically%20provide%20stronger%20acceleration%20but%20incur%20noticeable%20quality%20loss%2C%20while%20token%20sparse%20methods%20are%20usually%20more%20accurate%20yet%20deliver%20limited%20end-to-end%20speedup%20because%20top-k%20routing%20over%20the%20full%20cache%20remains%20expensive.%20In%20this%20work%2C%20we%20propose%20cross-layer%20sparse%20attention%20(CLSA)%2C%20which%20is%20built%20on%20top%20of%20KV-sharing%20architectures%20such%20as%20YOCO.%20The%20core%20idea%20is%20to%20share%20not%20only%20the%20KV%20cache%20across%20cross-decoder%20layers%2C%20but%20also%20the%20routing%20index.%20A%20single%20indexer%20computes%20token-level%20top-k%20selection%20once%20and%20reuses%20the%20resulting%20index%20across%20layers%2C%20thereby%20preserving%20the%20fine-grained%20selectivity%20of%20token%20sparse%20attention%20while%20amortizing%20the%20routing%20overhead.%20The%20resulting%20architecture%20improves%20all%20major%20inference%20bottlenecks%20jointly%2C%20including%20pre-filling%2C%20KV-cache%20storage%2C%20and%20long-context%20decoding.%20Experiments%20across%20short-context%20and%20long-context%20benchmarks%20show%20that%20CLSA%20is%20both%20accurate%20and%20efficient%2C%20achieving%20up%20to%207.6x%20decoding%20speedup%20and%2017.1x%20overall%20throughput%20improvement%20at%20128K%20context.%20These%20results%20suggest%20a%20more%20complete%20architectural%20solution%20for%20long-context%20LLMs%20that%20jointly%20advances%20model%20quality%20and%20inference%20efficiency.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06467v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06467v1%0A-%20Score%3A%209%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-you-only-index-once-cross-layer-sparse-attention-with-shared-routing.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"You Only Index Once: Cross-Layer Sparse Attention with Shared Routing\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06467v1\npdf_url: https://arxiv.org/pdf/2606.06467v1\nscore: 9\ndate: 2026-06-07\nauthors: [\"Yutao Sun\", \"Yanqi Zhang\", \"Li Dong\", \"Jianyong Wang\", \"Furu Wei\"]\ntags: [ai-signal, cs-CL, cs-AI, cs-LG]\nstatus: inbox\n---\n\n# You Only Index Once: Cross-Layer Sparse Attention with Shared Routing\n\n## Why This Matters\nThis paper is highly relevant to LLM integration, fine-tuning, and production AI. It proposes a novel cross-layer sparse attention architecture for long-context inference in large language models, demonstrating its efficiency and accuracy in certain scenarios. The paper provides specific technical content, including methods, benchmarks, and empirical results.\n\n## Abstract\nLong-context inference in modern LLMs is increasingly constrained by decoding efficiency, especially in reasoning-heavy settings where models generate long intermediate chains of thought. Existing sparse attention methods often face a practical efficiency-quality trade-off. Structured block sparse methods typically provide stronger acceleration but incur noticeable quality loss, while token sparse methods are usually more accurate yet deliver limited end-to-end speedup because top-k routing over the full cache remains expensive. In this work, we propose cross-layer sparse attention (CLSA), which is built on top of KV-sharing architectures such as YOCO. The core idea is to share not only the KV cache across cross-decoder layers, but also the routing index. A single indexer computes token-level top-k selection once and reuses the resulting index across layers, thereby preserving the fine-grained selectivity of token sparse attention while amortizing the routing overhead. The resulting architecture improves all major inference bottlenecks jointly, including pre-filling, KV-cache storage, and long-context decoding. Experiments across short-context and long-context benchmarks show that CLSA is both accurate and efficient, achieving up to 7.6x decoding speedup and 17.1x overall throughput improvement at 128K context. These results suggest a more complete architectural solution for long-context LLMs that jointly advances model quality and inference efficiency.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06467v1\n- PDF: https://arxiv.org/pdf/2606.06467v1\n- Score: 9/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

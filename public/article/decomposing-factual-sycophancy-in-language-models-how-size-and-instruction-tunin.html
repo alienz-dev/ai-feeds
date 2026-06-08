@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decomposing Factual Sycophancy in Language Models: How Size and Instruction Tuning Shape Robustness — AI Signals</title>
+  <meta name="description" content="Curated AI industry intelligence — papers, tools, and insights worth your time.">
+  <link rel="canonical" href="https://signals.mingli.world/article/decomposing-factual-sycophancy-in-language-models-how-size-and-instruction-tunin.html">
+  <style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.meta span { margin-right: 1rem; }
+.score-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.score-9 { background: var(--red); color: #fff; }
+.score-8 { background: var(--orange); color: #fff; }
+.score-7 { background: var(--border); color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); }
+.card-explanation { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+.card-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card-links a { font-size: 0.85rem; }
+.abstract { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0; line-height: 1.7; }
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.back-link { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.archive-list li:last-child { border-bottom: none; }
+.archive-list a { font-size: 1rem; }
+.archive-count { color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem; }
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--green);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+nav { display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/archive.html">Archive</a>
+  </nav>
+  
+  <a href="/2026-06-07.html" class="back-link">← Back to 2026-06-07 digest</a>
+
+  <article>
+    <h1>Decomposing Factual Sycophancy in Language Models: How Size and Instruction Tuning Shape Robustness</h1>
+
+    <div class="meta">
+      <span class="score-badge score-8">8/10</span>
+      <span>arXiv</span>
+      <span>Friday, June 5, 2026</span>
+    </div>
+
+    <div class="card">
+      <h3>Why This Matters</h3>
+      <p class="card-explanation">This paper is relevant to fine-tuning, LLM integration, and production AI. The abstract describes a method to decompose factual sycophancy in language models and investigates the effects of size and instruction tuning on robustness. The paper presents empirical results and provides specific technical content, including the use of 56 open-weight models and 13 manipulation types.</p>
+    </div>
+
+    
+    <h2>Abstract</h2>
+    <p class="abstract">Factual sycophancy occurs when a language model abandons a correct, verifiable answer under social pressure. Because a flip occurs only when pressure toward a false answer exceeds the model&#039;s neutral preference for the truth, flip rates conflate two mechanisms: the strength of that baseline preference (truth margin), and how far pressure shifts it (manipulation sensitivity). We decompose factual sycophancy into these channels and use them to separate the effects of size and instruction tuning across 56 open-weight models spanning 0.3B-32B parameters and 13 manipulation types. We find that vulnerability is governed mainly by size, but instruction tuning changes how size acts: small instruction-tuned models can become less robust, whereas large instruction-tuned models usually become more robust. Instruction tuning primarily increases truth margin, but its behavioral effect depends on manipulation type. Scaling also changes the two channels differently: base models gain margin but become mildly more manipulation-sensitive, whereas instruction-tuned models gain margin faster and become less sensitive. Factual sycophancy is therefore not a single scalar property. Evaluations should report channel-specific, manipulation-specific, and size-conditioned robustness rather than flip rates alone.</p>
+    
+
+    <h2>Links</h2>
+    <div class="card-links">
+      <a href="https://arxiv.org/abs/2606.06306v1" target="_blank" rel="noopener">📄 Original</a>
+      <a href="https://arxiv.org/pdf/2606.06306v1" target="_blank" rel="noopener">📥 PDF</a>
+    </div>
+
+    <h2>Metadata</h2>
+    <div class="meta">
+      <p><strong>Authors:</strong> Victor De Marez, Luna De Bruyne, Walter Daelemans</p>
+      <p><strong>Categories:</strong> cs.CL</p>
+      <p><strong>Published:</strong> Friday, June 5, 2026</p>
+    </div>
+
+    <h2>Save to Vault</h2>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Save this article directly to your Obsidian vault. Opens Obsidian with the note pre-filled.
+    </p>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="obsidian://new?vault=vault&file=inbox%2Fsignals%2F2026-06-07-decomposing-factual-sycophancy-in-language-models-how-size-and-instruction-tunin&content=---%0Atitle%3A%20%22Decomposing%20Factual%20Sycophancy%20in%20Language%20Models%3A%20How%20Size%20and%20Instruction%20Tuning%20Shape%20Robustness%22%0Asource%3A%20arxiv%0Aurl%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06306v1%0Apdf_url%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06306v1%0Ascore%3A%208%0Adate%3A%202026-06-07%0Aauthors%3A%20%5B%22Victor%20De%20Marez%22%2C%20%22Luna%20De%20Bruyne%22%2C%20%22Walter%20Daelemans%22%5D%0Atags%3A%20%5Bai-signal%2C%20cs-CL%5D%0Astatus%3A%20inbox%0A---%0A%0A%23%20Decomposing%20Factual%20Sycophancy%20in%20Language%20Models%3A%20How%20Size%20and%20Instruction%20Tuning%20Shape%20Robustness%0A%0A%23%23%20Why%20This%20Matters%0AThis%20paper%20is%20relevant%20to%20fine-tuning%2C%20LLM%20integration%2C%20and%20production%20AI.%20The%20abstract%20describes%20a%20method%20to%20decompose%20factual%20sycophancy%20in%20language%20models%20and%20investigates%20the%20effects%20of%20size%20and%20instruction%20tuning%20on%20robustness.%20The%20paper%20presents%20empirical%20results%20and%20provides%20specific%20technical%20content%2C%20including%20the%20use%20of%2056%20open-weight%20models%20and%2013%20manipulation%20types.%0A%0A%23%23%20Abstract%0AFactual%20sycophancy%20occurs%20when%20a%20language%20model%20abandons%20a%20correct%2C%20verifiable%20answer%20under%20social%20pressure.%20Because%20a%20flip%20occurs%20only%20when%20pressure%20toward%20a%20false%20answer%20exceeds%20the%20model's%20neutral%20preference%20for%20the%20truth%2C%20flip%20rates%20conflate%20two%20mechanisms%3A%20the%20strength%20of%20that%20baseline%20preference%20(truth%20margin)%2C%20and%20how%20far%20pressure%20shifts%20it%20(manipulation%20sensitivity).%20We%20decompose%20factual%20sycophancy%20into%20these%20channels%20and%20use%20them%20to%20separate%20the%20effects%20of%20size%20and%20instruction%20tuning%20across%2056%20open-weight%20models%20spanning%200.3B-32B%20parameters%20and%2013%20manipulation%20types.%20We%20find%20that%20vulnerability%20is%20governed%20mainly%20by%20size%2C%20but%20instruction%20tuning%20changes%20how%20size%20acts%3A%20small%20instruction-tuned%20models%20can%20become%20less%20robust%2C%20whereas%20large%20instruction-tuned%20models%20usually%20become%20more%20robust.%20Instruction%20tuning%20primarily%20increases%20truth%20margin%2C%20but%20its%20behavioral%20effect%20depends%20on%20manipulation%20type.%20Scaling%20also%20changes%20the%20two%20channels%20differently%3A%20base%20models%20gain%20margin%20but%20become%20mildly%20more%20manipulation-sensitive%2C%20whereas%20instruction-tuned%20models%20gain%20margin%20faster%20and%20become%20less%20sensitive.%20Factual%20sycophancy%20is%20therefore%20not%20a%20single%20scalar%20property.%20Evaluations%20should%20report%20channel-specific%2C%20manipulation-specific%2C%20and%20size-conditioned%20robustness%20rather%20than%20flip%20rates%20alone.%0A%0A%23%23%20Source%0A-%20Original%3A%20https%3A%2F%2Farxiv.org%2Fabs%2F2606.06306v1%0A-%20PDF%3A%20https%3A%2F%2Farxiv.org%2Fpdf%2F2606.06306v1%0A-%20Score%3A%208%2F10%0A-%20Captured%3A%202026-06-07%0A" class="btn btn-primary" id="saveBtn">
+        📋 Save to Obsidian Vault
+      </a>
+      <button class="btn" onclick="copyMarkdown()">
+        📎 Copy Markdown
+      </button>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+      Will save to: <code>vault/inbox/signals/2026-06-07-decomposing-factual-sycophancy-in-language-models-how-size-and-instruction-tunin.md</code>
+    </p>
+  </article>
+
+  <script>
+    const vaultMarkdown = "---\ntitle: \"Decomposing Factual Sycophancy in Language Models: How Size and Instruction Tuning Shape Robustness\"\nsource: arxiv\nurl: https://arxiv.org/abs/2606.06306v1\npdf_url: https://arxiv.org/pdf/2606.06306v1\nscore: 8\ndate: 2026-06-07\nauthors: [\"Victor De Marez\", \"Luna De Bruyne\", \"Walter Daelemans\"]\ntags: [ai-signal, cs-CL]\nstatus: inbox\n---\n\n# Decomposing Factual Sycophancy in Language Models: How Size and Instruction Tuning Shape Robustness\n\n## Why This Matters\nThis paper is relevant to fine-tuning, LLM integration, and production AI. The abstract describes a method to decompose factual sycophancy in language models and investigates the effects of size and instruction tuning on robustness. The paper presents empirical results and provides specific technical content, including the use of 56 open-weight models and 13 manipulation types.\n\n## Abstract\nFactual sycophancy occurs when a language model abandons a correct, verifiable answer under social pressure. Because a flip occurs only when pressure toward a false answer exceeds the model's neutral preference for the truth, flip rates conflate two mechanisms: the strength of that baseline preference (truth margin), and how far pressure shifts it (manipulation sensitivity). We decompose factual sycophancy into these channels and use them to separate the effects of size and instruction tuning across 56 open-weight models spanning 0.3B-32B parameters and 13 manipulation types. We find that vulnerability is governed mainly by size, but instruction tuning changes how size acts: small instruction-tuned models can become less robust, whereas large instruction-tuned models usually become more robust. Instruction tuning primarily increases truth margin, but its behavioral effect depends on manipulation type. Scaling also changes the two channels differently: base models gain margin but become mildly more manipulation-sensitive, whereas instruction-tuned models gain margin faster and become less sensitive. Factual sycophancy is therefore not a single scalar property. Evaluations should report channel-specific, manipulation-specific, and size-conditioned robustness rather than flip rates alone.\n\n## Source\n- Original: https://arxiv.org/abs/2606.06306v1\n- PDF: https://arxiv.org/pdf/2606.06306v1\n- Score: 8/10\n- Captured: 2026-06-07\n";
+
+    async function copyMarkdown() {
+      try {
+        await navigator.clipboard.writeText(vaultMarkdown);
+        showToast('✅ Markdown copied to clipboard');
+      } catch (e) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = vaultMarkdown;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Markdown copied to clipboard');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+  <footer>
+    <p>Generated by <a href="https://github.com/alienz-dev/ai-feeds">AI Feeds</a> · Updated daily</p>
+  </footer>
+  <div id="toast" class="toast"></div>
+</body>
+</html>
