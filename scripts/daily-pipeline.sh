@@ -71,11 +71,13 @@ echo ""
 echo "--- Generating static site ---"
 npx tsx scripts/generate-site.ts --date "$DATE" 2>&1 || echo "  WARNING: site generation failed"
 
-# 7. Deploy to Vercel (if site is enabled)
-if [[ -d "public" ]] && [[ -f "vercel.json" ]]; then
+# 7. Deploy to Vercel (deploy from public/ directory)
+if [[ -d "public" ]]; then
   echo ""
   echo "--- Deploying to Vercel ---"
-  vercel deploy --prod --yes 2>&1 || echo "  WARNING: Vercel deploy failed"
+  # Copy vercel.json to public/ for clean URLs
+  cp -f vercel.json public/vercel.json 2>/dev/null || true
+  cd public && vercel deploy --prod --yes 2>&1 && cd "$PROJECT_DIR" || { cd "$PROJECT_DIR"; echo "  WARNING: Vercel deploy failed"; }
 fi
 
 # 8. Send Telegram notification (only if high-scoring papers exist)

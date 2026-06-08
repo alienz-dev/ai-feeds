@@ -6,7 +6,8 @@
   "description": "Personal AI industry intelligence system",
   "scripts": {
     "test": "vitest run",
-    "typecheck": "node --max-old-space-size=4096 node_modules/.bin/tsc --noEmit --incremental"
+    "typecheck": "node --max-old-space-size=4096 node_modules/.bin/tsc --noEmit --incremental",
+    "vercel-build": "echo 'Static site, no build needed'"
   },
   "dependencies": {
     "better-sqlite3": "^12.10.0",
