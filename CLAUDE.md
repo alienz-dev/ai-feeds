@@ -116,6 +116,21 @@ Features are built through a 3-phase lifecycle. **Do not skip phases.**
 | `/spec-align` | Check spec vs code alignment |
 | `/researcher` | Deep research with parallel explorers |
 
+## Nexus Integration
+
+ai-feeds connects to the **nexus** knowledge hub for cross-source intelligence. Nexus ingests ai-feeds data along with job-hunter, email-hub, vault, and RSS feeds. It builds a knowledge graph, extracts entities, detects skill gaps, and identifies trending topics.
+
+**Feedback loop:** Nexus signals boost paper relevance scoring. Papers covering gap skills or trending topics get higher scores.
+
+**Spec:** `specs/SPEC-NEXUS.md` — Nexus Feedback Integration
+
+**Quick start:**
+1. Start nexus: `cd ~/projects/nexus && npx nexus serve`
+2. Enable in ai-feeds config: set `nexus.enabled: true` in `config.yaml`
+3. Score with boost: `npm run score -- --nexus`
+
+**Client adapter:** `src/nexus-client.ts` — fetches scoring signals from `http://localhost:3777/api/feedback/`
+
 ## Reference Projects
 
 See `research/landscape-report.md` for the full landscape. Key projects to study:
@@ -123,3 +138,4 @@ See `research/landscape-report.md` for the full landscape. Key projects to study
 - **Horizon** (5.6k stars) — scoring system, bilingual, configurable source hub
 - **CondenseIt** (60 stars) — preference learning from ratings, "why ranked here"
 - **matouskozak/arxiv-digest** — papers as GitHub Issues (issue-driven learning pattern)
+- **nexus** — cross-source knowledge hub with feedback API (see `specs/SPEC-NEXUS.md`)

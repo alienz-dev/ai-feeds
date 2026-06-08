@@ -19,3 +19,4 @@ processor/output/*.json
 
 # Generated issue files
 issues/learn-*.md
+.vercel
