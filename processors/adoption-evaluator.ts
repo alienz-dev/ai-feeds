@@ -6,6 +6,7 @@
 
 import type { ScoredPaper } from "./scorer.js";
 import { execSync } from "node:child_process";
+import { writeFileSync, unlinkSync } from "node:fs";
 
 export interface EnhancementTarget {
   name: string;
@@ -264,6 +265,10 @@ export class AdoptionEvaluator {
     const title = `Enhancement: ${paper.title.slice(0, 100)}`;
 
     try {
+      // Write body to temp file to avoid shell escaping issues
+      const tmpFile = `/tmp/issue-body-${Date.now()}.md`;
+      writeFileSync(tmpFile, body, "utf-8");
+
       const result = execSync(
         `issue open "${title.replace(/"/g, '\\"')}" ` +
         `--project ${target.name} ` +
@@ -271,9 +276,12 @@ export class AdoptionEvaluator {
         `--severity ${this.config.severity} ` +
         `--reporter ${this.config.reporter} ` +
         `--tags "${tags}" ` +
-        `--body "${body.replace(/"/g, '\\"').replace(/\n/g, "\\n")}"`,
+        `--body "$(cat ${tmpFile})"`,
         { encoding: "utf-8", timeout: 10000 }
       ).trim();
+
+      // Clean up temp file
+      try { unlinkSync(tmpFile); } catch {}
 
       return result;
     } catch (err) {
