@@ -246,11 +246,9 @@ describe("Config loading with defaults", () => {
     const config = loadConfig({});
     expect(config.enabled).toBe(true);
     expect(config.subreddits).toEqual(["MachineLearning", "LocalLLaMA", "artificial"]);
-    expect(config.sort).toBe("hot");
-    expect(config.limit).toBe(25);
-    expect(config.timeout_seconds).toBe(30);
-    expect(config.delay_seconds).toBe(1.0);
-    expect(config.cdp_endpoint).toBe("http://localhost:9222");
+    expect(config.limit).toBe(100);
+    expect(config.hours_back).toBe(24);
+    expect(config.delay_seconds).toBe(0.5);
   });
 
   it("uses defaults for missing keys only (preserves provided keys)", async () => {
@@ -271,10 +269,8 @@ describe("Config loading with defaults", () => {
     expect(config.subreddits).toEqual(["customsub"]);
     expect(config.limit).toBe(50);
     // These should use defaults
-    expect(config.sort).toBe("hot");
-    expect(config.timeout_seconds).toBe(30);
-    expect(config.delay_seconds).toBe(1.0);
-    expect(config.cdp_endpoint).toBe("http://localhost:9222");
+    expect(config.hours_back).toBe(24);
+    expect(config.delay_seconds).toBe(0.5);
   });
 
   it("flat config keys are supported (not just nested sources.reddit)", async () => {
@@ -521,9 +517,9 @@ describe("RedditClient instantiation", () => {
     const { RedditClient } = await import("../collectors/reddit-client.js");
 
     const client = new RedditClient({
-      delaySeconds: 1,
-      timeoutSeconds: 30,
-      cdpEndpoint: "http://localhost:9222",
+      limit: 100,
+      hoursBack: 24,
+      delaySeconds: 0.5,
     });
 
     expect(client).toBeDefined();
@@ -534,9 +530,9 @@ describe("RedditClient instantiation", () => {
     const { RedditClient } = await import("../collectors/reddit-client.js");
 
     expect(() => new RedditClient({
+      limit: 50,
+      hoursBack: 12,
       delaySeconds: 1.0,
-      timeoutSeconds: 30,
-      cdpEndpoint: "http://localhost:9222",
     })).not.toThrow();
   });
 });

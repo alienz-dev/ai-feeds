@@ -14,6 +14,6 @@
     "outDir": "dist",
     "rootDir": "."
   },
-  "include": ["collectors/**/*.ts", "processor/**/*.ts", "db/**/*.ts", "tests/**/*.ts"],
+  "include": ["collectors/**/*.ts", "processor/**/*.ts", "db/**/*.ts", "sources/**/*.ts", "processors/**/*.ts", "pipelines/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

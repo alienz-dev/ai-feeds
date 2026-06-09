@@ -1,8 +1,7 @@
 /**
  * Product Hunt Collector — main entry point.
  *
- * Scrapes the Product Hunt daily leaderboard via CDP, deduplicates by ID,
- * and returns a structured ProductHuntResult.
+ * Fetches products from the Product Hunt RSS feed.
  */
 
 import { ProductHuntClient } from "./producthunt-client.js";
@@ -27,24 +26,14 @@ export interface ProductHuntResult {
 
 export interface ProductHuntConfig {
   enabled: boolean;
-  days: number;
-  timeout_seconds: number;
-  delay_seconds: number;
-  cdp_endpoint: string;
 }
 
 const DEFAULTS: ProductHuntConfig = {
   enabled: false,
-  days: 1,
-  timeout_seconds: 30,
-  delay_seconds: 2.0,
-  cdp_endpoint: "http://localhost:9222",
 };
 
 /**
- * Load Product Hunt config by merging a partial config (possibly nested under
- * sources.producthunt) with defaults. Only overrides keys that are explicitly
- * provided — missing keys fall back to defaults.
+ * Load Product Hunt config.
  */
 export function loadConfig(rawConfig: unknown): ProductHuntConfig {
   const cfg = rawConfig as Record<string, any> | undefined;
@@ -52,10 +41,6 @@ export function loadConfig(rawConfig: unknown): ProductHuntConfig {
 
   return {
     enabled: raw.enabled ?? DEFAULTS.enabled,
-    days: raw.days ?? DEFAULTS.days,
-    timeout_seconds: raw.timeout_seconds ?? DEFAULTS.timeout_seconds,
-    delay_seconds: raw.delay_seconds ?? DEFAULTS.delay_seconds,
-    cdp_endpoint: raw.cdp_endpoint ?? DEFAULTS.cdp_endpoint,
   };
 }
 
@@ -64,8 +49,7 @@ export interface FetchOptions {
 }
 
 /**
- * Fetch Product Hunt products based on config. Supports dependency injection
- * via the options.client parameter for testability.
+ * Fetch Product Hunt products from RSS feed.
  */
 export async function fetchProducthunt(
   config: ProductHuntConfig,
@@ -85,32 +69,15 @@ export async function fetchProducthunt(
     };
   }
 
-  const client =
-    options?.client ??
-    new ProductHuntClient({
-      delaySeconds: config.delay_seconds,
-      timeoutSeconds: config.timeout_seconds,
-      cdpEndpoint: config.cdp_endpoint,
-    });
+  const client = options?.client ?? new ProductHuntClient();
 
-  // Scrape up to `config.days` days back
-  const dates: string[] = [];
-  for (let i = 0; i < config.days; i++) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    dates.push(d.toISOString().slice(0, 10));
-  }
-
-  for (const date of dates) {
-    try {
-      const dayPapers = await client.fetchProducts(date);
-      papers.push(...dayPapers);
-      log.info(`Fetched ${dayPapers.length} products for ${date}`);
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      warnings.push(`Failed to fetch ${date}: ${msg}`);
-      log.warn(`Failed to fetch ${date}: ${msg}`);
-    }
+  try {
+    papers = await client.fetch();
+    log.info(`Fetched ${papers.length} products from Product Hunt RSS feed`);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    warnings.push(`Failed to fetch: ${msg}`);
+    log.warn(`Failed to fetch: ${msg}`);
   }
 
   // Dedup by ID
@@ -119,7 +86,7 @@ export async function fetchProducthunt(
   const result: ProductHuntResult = {
     source: "producthunt",
     fetched_at: new Date().toISOString(),
-    date_queried: dates[0] ?? new Date().toISOString().slice(0, 10),
+    date_queried: new Date().toISOString().slice(0, 10),
     total_results: papers.length,
     warnings,
     papers,
@@ -139,7 +106,6 @@ async function main(): Promise<void> {
       "dry-run": { type: "boolean", default: false },
       config: { type: "string", short: "c" },
       verbose: { type: "boolean", short: "v", default: false },
-      days: { type: "string", short: "d" },
     },
     strict: false,
   });
@@ -147,14 +113,13 @@ async function main(): Promise<void> {
   if (values.help) {
     console.log(`Usage: producthunt [options]
 
-Scrape Product Hunt daily leaderboard via Chrome DevTools Protocol.
+Fetch Product Hunt products from RSS feed.
 
 Options:
   -h, --help         Show this help message
   --dry-run          Fetch but do not write output file
   -c, --config PATH  Path to config YAML file (default: config.yaml)
   -v, --verbose      Enable debug logging
-  -d, --days N       How many days back to scrape (default: 1)
 `);
     process.exit(0);
   }
@@ -173,11 +138,6 @@ Options:
   }
 
   const config = loadConfig(rawConfig);
-
-  // Override days from CLI
-  if (values.days) {
-    config.days = parseInt(values.days as string, 10);
-  }
 
   if (!config.enabled) {
     log.info("Product Hunt collector is disabled in config");

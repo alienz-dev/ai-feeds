@@ -131,7 +131,7 @@ export class GithubClient {
       q += `+language:${language}`;
     }
 
-    const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(q)}&sort=stars&order=desc&per_page=${maxResults}`;
+    const url = `${GITHUB_API}/search/repositories?q=${q}&sort=stars&order=desc&per_page=${maxResults}`;
 
     const response = await this.fetchWithRetry(url);
     if (!response) return [];

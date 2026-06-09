@@ -1,8 +1,8 @@
 /**
  * Reddit Collector — main entry point.
  *
- * Fetches posts from Reddit subreddits, deduplicates by ID,
- * and returns a structured RedditResult.
+ * Fetches posts from Reddit subreddits via Arctic Shift API,
+ * deduplicates by ID, and returns a structured RedditResult.
  */
 
 import { RedditClient } from "./reddit-client.js";
@@ -25,27 +25,22 @@ export interface RedditResult {
 export interface RedditConfig {
   enabled: boolean;
   subreddits: string[];
-  sort: string;
   limit: number;
-  timeout_seconds: number;
+  hours_back: number;
   delay_seconds: number;
-  cdp_endpoint: string;
 }
 
 const DEFAULTS: RedditConfig = {
   enabled: true,
   subreddits: ["MachineLearning", "LocalLLaMA", "artificial"],
-  sort: "hot",
-  limit: 25,
-  timeout_seconds: 30,
-  delay_seconds: 1.0,
-  cdp_endpoint: "http://localhost:9222",
+  limit: 100,
+  hours_back: 24,
+  delay_seconds: 0.5,
 };
 
 /**
  * Load Reddit config by merging a partial config (possibly nested under
- * sources.reddit) with defaults. Only overrides keys that are explicitly
- * provided — missing keys fall back to defaults.
+ * sources.reddit) with defaults.
  */
 export function loadConfig(rawConfig: unknown): RedditConfig {
   const cfg = rawConfig as Record<string, any> | undefined;
@@ -54,11 +49,9 @@ export function loadConfig(rawConfig: unknown): RedditConfig {
   return {
     enabled: raw.enabled ?? DEFAULTS.enabled,
     subreddits: raw.subreddits ?? DEFAULTS.subreddits,
-    sort: raw.sort ?? DEFAULTS.sort,
     limit: raw.limit ?? DEFAULTS.limit,
-    timeout_seconds: raw.timeout_seconds ?? DEFAULTS.timeout_seconds,
+    hours_back: raw.hours_back ?? DEFAULTS.hours_back,
     delay_seconds: raw.delay_seconds ?? DEFAULTS.delay_seconds,
-    cdp_endpoint: raw.cdp_endpoint ?? DEFAULTS.cdp_endpoint,
   };
 }
 
@@ -91,15 +84,15 @@ export async function fetchReddit(
   const client =
     options?.client ??
     new RedditClient({
+      limit: config.limit,
+      hoursBack: config.hours_back,
       delaySeconds: config.delay_seconds,
-      timeoutSeconds: config.timeout_seconds,
-      cdpEndpoint: config.cdp_endpoint,
     });
 
   try {
     papers = await client.fetchMultipleSubreddits(
       config.subreddits,
-      config.sort,
+      "hot",
       config.limit
     );
   } catch (err) {
@@ -140,6 +133,7 @@ async function main(): Promise<void> {
       "dry-run": { type: "boolean", default: false },
       config: { type: "string", short: "c" },
       verbose: { type: "boolean", short: "v", default: false },
+      subreddits: { type: "string", short: "s" },
     },
     strict: false,
   });
@@ -147,11 +141,14 @@ async function main(): Promise<void> {
   if (values.help) {
     console.log(`Usage: reddit [options]
 
+Fetch Reddit posts from subreddits via Arctic Shift API.
+
 Options:
-  -h, --help         Show this help message
-  --dry-run          Fetch but do not write output file
-  -c, --config PATH  Path to config YAML file (default: config.yaml)
-  -v, --verbose      Enable debug logging
+  -h, --help           Show this help message
+  --dry-run            Fetch but do not write output file
+  -c, --config PATH    Path to config YAML file (default: config.yaml)
+  -v, --verbose        Enable debug logging
+  -s, --subreddits LIST  Comma-separated subreddit list (overrides config)
 `);
     process.exit(0);
   }
@@ -171,6 +168,13 @@ Options:
 
   const config = loadConfig(rawConfig);
 
+  // Override subreddits from CLI
+  if (values.subreddits) {
+    config.subreddits = (values.subreddits as string)
+      .split(",")
+      .map((s: string) => s.trim());
+  }
+
   if (!config.enabled) {
     log.info("Reddit collector is disabled in config");
     process.exit(0);
@@ -178,13 +182,20 @@ Options:
 
   const result = await fetchReddit(config);
 
+  log.info(
+    `Fetched ${result.total_results} posts from ${result.subreddits_queried.length} subreddits`
+  );
+
+  if (result.warnings.length > 0) {
+    log.warn(`${result.warnings.length} warnings during fetch`);
+  }
+
   // Atomic write: write to .tmp then rename
   if (!values["dry-run"]) {
     const outputDir = path.resolve(
       path.dirname(new URL(import.meta.url).pathname),
       "output"
     );
-    // Ensure output directory exists
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
@@ -199,7 +210,6 @@ Options:
       fs.renameSync(tmpPath, outPath);
       log.info(`Wrote ${result.total_results} posts to ${outPath}`);
     } catch (err) {
-      // Clean up temp file on failure
       try { fs.unlinkSync(tmpPath); } catch { /* ignore */ }
       throw err;
     }
@@ -209,8 +219,15 @@ Options:
   }
 }
 
-// Run CLI if this is the main module
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Only run CLI when executed directly, not when imported (e.g. by tests)
+const isDirectRun =
+  process.argv[1] &&
+  new URL(`file://${process.argv[1]}`).pathname ===
+    new URL(import.meta.url).pathname;
+
+if (isDirectRun) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

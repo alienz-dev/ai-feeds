@@ -10,25 +10,10 @@ import path from "node:path";
 type Database = BetterSqlite3.Database;
 
 /**
- * Open (or create) the SQLite database, run migrations, enable WAL mode.
+ * Initialize the ai-feeds papers table on an existing database connection.
+ * Use this when sharing a DB with nexus (via createContext).
  */
-export function openDatabase(dbPath: string): Database {
-  // Create parent directories if needed (skip for :memory:)
-  if (dbPath !== ":memory:") {
-    const dir = path.dirname(dbPath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-  }
-
-  const db = new BetterSqlite3(dbPath);
-
-  // Enable WAL mode (for :memory: it becomes 'memory' journal, which is fine)
-  db.pragma("journal_mode = WAL");
-
-  // Enable foreign keys
-  db.pragma("foreign_keys = ON");
-
+export function initPapersTable(db: Database): void {
   // Create tables
   db.exec(`
     CREATE TABLE IF NOT EXISTS papers (
@@ -49,6 +34,8 @@ export function openDatabase(dbPath: string): Database {
       score_explanation TEXT,
       scored_at TEXT,
       score_interests TEXT,
+      nexus_boost REAL DEFAULT 0,
+      nexus_reasons TEXT DEFAULT '[]',
       first_seen_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
     );
@@ -62,6 +49,14 @@ export function openDatabase(dbPath: string): Database {
     );
   `);
 
+  // Migration: add nexus columns if missing
+  try {
+    db.prepare("SELECT nexus_boost FROM papers LIMIT 0").get();
+  } catch {
+    db.exec(`ALTER TABLE papers ADD COLUMN nexus_boost REAL DEFAULT 0`);
+    db.exec(`ALTER TABLE papers ADD COLUMN nexus_reasons TEXT DEFAULT '[]'`);
+  }
+
   // Create indexes
   db.exec(`
     CREATE INDEX IF NOT EXISTS idx_papers_published ON papers(published);
@@ -70,6 +65,31 @@ export function openDatabase(dbPath: string): Database {
     CREATE INDEX IF NOT EXISTS idx_interactions_paper_id ON paper_interactions(paper_id);
     CREATE INDEX IF NOT EXISTS idx_interactions_action ON paper_interactions(action);
   `);
+}
+
+/**
+ * Open (or create) the SQLite database, run migrations, enable WAL mode.
+ * Use this for standalone operation (not sharing DB with nexus).
+ */
+export function openDatabase(dbPath: string): Database {
+  // Create parent directories if needed (skip for :memory:)
+  if (dbPath !== ":memory:") {
+    const dir = path.dirname(dbPath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+  }
+
+  const db = new BetterSqlite3(dbPath);
+
+  // Enable WAL mode (for :memory: it becomes 'memory' journal, which is fine)
+  db.pragma("journal_mode = WAL");
+
+  // Enable foreign keys
+  db.pragma("foreign_keys = ON");
+
+  // Initialize tables
+  initPapersTable(db);
 
   return db;
 }
@@ -158,6 +178,8 @@ export function upsertPaper(
           score_explanation = ?,
           scored_at = ?,
           score_interests = ?,
+          nexus_boost = ?,
+          nexus_reasons = ?,
           updated_at = ?
         WHERE dedup_key = ?`
       ).run(
@@ -167,6 +189,8 @@ export function upsertPaper(
         paper.score_explanation ?? null,
         paper.scored_at ?? now,
         paper.score_interests ? JSON.stringify(paper.score_interests) : null,
+        paper.nexus_boost ?? 0,
+        paper.nexus_reasons ? JSON.stringify(paper.nexus_reasons) : "[]",
         now,
         existing.dedup_key
       );
@@ -196,8 +220,9 @@ export function upsertPaper(
       dedup_key, id, title, abstract, url, pdf_url, authors, categories,
       primary_category, published, updated, sources, source_ids,
       relevance_score, score_explanation, scored_at, score_interests,
+      nexus_boost, nexus_reasons,
       first_seen_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).run(
     dedupKey,
     sourceId,
@@ -216,6 +241,8 @@ export function upsertPaper(
     paper.score_explanation ?? null,
     paper.scored_at ?? null,
     paper.score_interests ? JSON.stringify(paper.score_interests) : null,
+    paper.nexus_boost ?? 0,
+    paper.nexus_reasons ? JSON.stringify(paper.nexus_reasons) : "[]",
     now,
     now
   );

@@ -1,12 +1,7 @@
-/**
- * Product Hunt RSS client — fetches products from the Atom feed.
- *
- * Uses the public RSS feed at https://www.producthunt.com/feed
- * No authentication or Chrome required.
- */
-
-import { log } from "./common.js";
-import type { Paper } from "./common.js";
+import { defineSource, type NexusContext } from "nexus";
+import { PaperSchema, type Paper } from "./types.js";
+import fs from "node:fs";
+import yaml from "yaml";
 
 const FEED_URL = "https://www.producthunt.com/feed";
 
@@ -24,6 +19,7 @@ interface FeedEntry {
 function parseFeedXml(xml: string): FeedEntry[] {
   const entries: FeedEntry[] = [];
 
+  // Simple XML parsing for Atom feed
   const entryMatches = xml.match(/<entry>([\s\S]*?)<\/entry>/g) ?? [];
 
   for (const entryXml of entryMatches) {
@@ -32,9 +28,11 @@ function parseFeedXml(xml: string): FeedEntry[] {
     const link = entryXml.match(/<link[^>]*href="([^"]*)"/)?.[1] ?? "";
     const published = entryXml.match(/<published>(.*?)<\/published>/)?.[1] ?? "";
 
+    // Extract tagline from content (HTML-encoded)
     const contentMatch = entryXml.match(/<content[^>]*>([\s\S]*?)<\/content>/);
     let content = "";
     if (contentMatch) {
+      // Decode HTML entities and extract text
       content = contentMatch[1]
         .replace(/&lt;/g, "<")
         .replace(/&gt;/g, ">")
@@ -74,17 +72,17 @@ function entryToPaper(entry: FeedEntry): Paper {
     primary_category: "producthunt",
     published: date,
     updated: date,
+    source: "producthunt",
   };
 }
 
-export class ProductHuntClient {
-  /**
-   * Fetch products from the Product Hunt RSS feed.
-   */
-  async fetch(): Promise<Paper[]> {
-    log.info("Fetching Product Hunt RSS feed");
-
+export const producthuntSource = defineSource({
+  name: "producthunt",
+  schema: PaperSchema,
+  fetch: async (ctx: NexusContext, _since?: string): Promise<Paper[]> => {
     try {
+      ctx.logger.info("Fetching Product Hunt RSS feed");
+
       const response = await fetch(FEED_URL, {
         headers: {
           "User-Agent": "ai-feeds/0.1 (Product Hunt collector)",
@@ -98,7 +96,7 @@ export class ProductHuntClient {
       const xml = await response.text();
       const entries = parseFeedXml(xml);
 
-      log.info(`Parsed ${entries.length} entries from Product Hunt feed`);
+      ctx.logger.info(`[producthunt] parsed ${entries.length} entries from feed`);
 
       const papers = entries.map(entryToPaper);
 
@@ -112,11 +110,11 @@ export class ProductHuntClient {
         }
       }
 
+      ctx.logger.info(`[producthunt] collected ${deduped.length} products`);
       return deduped;
     } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      log.error(`Product Hunt fetch failed: ${msg}`);
+      ctx.logger.error(`[producthunt] fetch failed: ${err}`);
       return [];
     }
-  }
-}
+  },
+});
