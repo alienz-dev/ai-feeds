@@ -19,10 +19,13 @@ import {
   detectFrontier,
   loadFrontierConfig,
   filterMiddleBand,
+  AdoptionEvaluator,
   type ScorerConfig,
   type ScorerResult,
   type FrontierConfig,
   type FrontierResult,
+  type AdoptionEvaluatorConfig,
+  type AdoptionResult,
 } from "../processors/index.js";
 import type { ScoredPaper } from "../processors/scorer.js";
 import { initPapersTable, upsertPaper } from "../db/database.js";
@@ -250,7 +253,30 @@ export async function runDailyPipeline(
     }
   }
 
-  // Step 4: Generate Telegram message
+  // Step 4: Adoption evaluation
+  let adoptionResults: AdoptionResult[] | undefined;
+  if (scorerResult && config.enhancement_targets?.enabled) {
+    ctx.logger.info("[pipeline] step 4: evaluating adoption targets");
+    const adoptionConfig: AdoptionEvaluatorConfig = {
+      enabled: config.enhancement_targets.enabled,
+      project: config.enhancement_targets.project ?? "ai-feeds",
+      reporter: config.enhancement_targets.reporter ?? "ai-feeds-pipeline",
+      severity: config.enhancement_targets.severity ?? "P2",
+      scoreThreshold: config.enhancement_targets.score_threshold ?? 8,
+      evaluationMode: config.enhancement_targets.evaluation_mode ?? "hybrid",
+      nexusUrl: config.enhancement_targets.nexus_url ?? "http://localhost:3777",
+      targets: config.enhancement_targets.targets ?? [],
+    };
+
+    const evaluator = new AdoptionEvaluator(adoptionConfig);
+    adoptionResults = await evaluator.evaluate(scorerResult.papers as ScoredPaper[]);
+
+    const created = adoptionResults.filter((r) => r.action === "created").length;
+    const skipped = adoptionResults.filter((r) => r.action === "skipped").length;
+    ctx.logger.info(`[pipeline] adoption: ${created} issues created, ${skipped} skipped`);
+  }
+
+  // Step 5: Generate Telegram message
   if (!options.skipTelegram && scorerResult && !options.dryRun) {
     const date = new Date().toISOString().slice(0, 10);
     const message = generateTelegramMessage(date, scorerResult, frontierResult);
